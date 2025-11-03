@@ -25,6 +25,7 @@ document.getElementById('login').addEventListener('click', function() {
       console.log(cur.id);
       alert('Login successful!');
       console.log(cur);
+      window.location.href = 'home.html';
 
     })
     .catch((error) => {
@@ -35,6 +36,5 @@ document.getElementById('login').addEventListener('click', function() {
 
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    window.location.href = 'home.html';
   }
 });
