@@ -25,6 +25,7 @@ document.getElementById('login').addEventListener('click', function() {
       console.log(cur.id);
       alert('Login successful!');
       console.log(cur);
+      window.location.href = 'home.html';
 
     })
     .catch((error) => {

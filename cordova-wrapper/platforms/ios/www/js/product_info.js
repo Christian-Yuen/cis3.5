@@ -214,15 +214,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     const button = document.createElement('div');
                     button.innerHTML = `
                   <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 10px;">
-                     <div style="height: 22px; padding-left: 120px; padding-right: 120px; padding-top: 16px; padding-bottom: 16px; position: relative; background: #62931B; border-radius: 100px; display: inline-flex; justify-content: center; align-items: center;">
-                       <a id="close"
-                           style="text-align: center; color: white; font-size: 16px; font-family: 'Inter'; font-weight: 700; text-decoration: none;">Close item</a>
-                     </div>
-                     <div style="height: 22px; padding-left: 120px; padding-right: 120px; padding-top: 16px; padding-bottom: 16px; background: #62931B; border-radius: 100px; display: inline-flex; justify-content: center; align-items: center; margin-top: 20px;">
+                    <div style="height: 22px; padding-left: 120px; padding-right: 120px; padding-top: 16px; padding-bottom: 16px; position: relative; background: #62931B; border-radius: 100px; display: inline-flex; justify-content: center; align-items: center;">
+                      <a id="close"
+                          style="text-align: center; color: white; font-size: 16px; font-family: 'Inter'; font-weight: 700; text-decoration: none;">Close item</a>
+                    </div>
+                    <div style="height: 22px; padding-left: 120px; padding-right: 120px; padding-top: 16px; padding-bottom: 16px; background: #62931B; border-radius: 100px; display: inline-flex; justify-content: center; align-items: center; margin-top: 20px;">
                         <a id="delete" style="text-align: center; color: white; font-size: 16px; font-family: 'Inter'; font-weight: 700; text-decoration: none;">
                           Delete item
                         </a>
-                     </div>
+                    </div>
                     </div>`;
                     buttondiv.appendChild(button); // Append the div to the container element
                     document.getElementById('close').addEventListener('click', function(event) {
@@ -239,16 +239,54 @@ document.addEventListener('DOMContentLoaded', () => {
                         });
                     });
                     //This should be the code for the delete button that works
-                    buttondiv.appendChild(button)
+                    buttondiv.appendChild(button);
                     document.getElementById('delete').addEventListener('click', function(event) {
-                        const docId = data.id; // Assume you have the document ID
-                        console.log("delete button is clicked");
-                        console.log(docId);
-                        console.log(docRef);
-                        deleteDoc(docRef);
-                        console.log("Document successfully deleted!");
-                    }); //onwer can close a deal
-                }
+                        const modal = document.createElement('div');
+                        modal.style.cssText = `
+                            position: fixed;
+                            top: 0;
+                            left: 0;
+                            width: 100%;
+                            height: 100%;
+                            background: rgba(0,0,0,0.7);
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            z-index: 1000;
+                        `;
+
+                        modal.innerHTML = `
+                            <div style="background: white; padding: 2rem; border-radius: 8px; text-align: center; max-width: 400px; width: 80%;">
+                                <h3 style="color: #dc3545;">Confirm Deletion</h3>
+                                <p>Are you sure you want to delete this item? This cannot be undone.</p>
+                                <div style="margin-top: 1.5rem; display: flex; justify-content: center; gap: 10px;">
+                                    <button id="confirmDelete" style="background: #dc3545; color: white; padding: 0.5rem 1.5rem; border: none; border-radius: 4px; cursor: pointer;">
+                                        Delete Permanently
+                                    </button>
+                                    <button id="cancelDelete" style="background: #6c757d; color: white; padding: 0.5rem 1.5rem; border: none; border-radius: 4px; cursor: pointer;">
+                                        Cancel
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+
+                        document.body.appendChild(modal);
+                        document.getElementById('confirmDelete').addEventListener('click', async function() {
+                            try {
+                                await deleteDoc(docRef); 
+                                console.log("Document successfully deleted!");
+                                document.body.removeChild(modal);
+                                alert("Item deleted successfully!");
+                            } catch (error) {
+                                console.error("Error deleting document:", error);
+                                alert("Failed to delete item. Please try again.");
+                            }
+                        });
+                        document.getElementById('cancelDelete').addEventListener('click', function() {
+                            document.body.removeChild(modal); 
+                        });
+                    });
+                  }
                   else if (data.closed === true) {
                     const buttondiv = document.getElementById('buttondiv'); // Get the container element
                     const button = document.createElement('div');
