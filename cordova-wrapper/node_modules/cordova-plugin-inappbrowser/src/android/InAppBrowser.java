@@ -54,7 +54,6 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.DownloadListener;
 import android.webkit.WebViewClient;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -98,7 +97,6 @@ public class InAppBrowser extends CordovaPlugin {
     private static final String LOAD_START_EVENT = "loadstart";
     private static final String LOAD_STOP_EVENT = "loadstop";
     private static final String LOAD_ERROR_EVENT = "loaderror";
-    private static final String DOWNLOAD_EVENT = "download";
     private static final String MESSAGE_EVENT = "message";
     private static final String CLEAR_ALL_CACHE = "clearcache";
     private static final String CLEAR_SESSION_CACHE = "clearsessioncache";
@@ -118,8 +116,6 @@ public class InAppBrowser extends CordovaPlugin {
     private static final String FOOTER_COLOR = "footercolor";
     private static final String BEFORELOAD = "beforeload";
     private static final String FULLSCREEN = "fullscreen";
-
-    private static final int TOOLBAR_HEIGHT = 48;
 
     private static final List customizableOptions = Arrays.asList(CLOSE_BUTTON_CAPTION, TOOLBAR_COLOR, NAVIGATION_COLOR, CLOSE_BUTTON_COLOR, FOOTER_COLOR);
 
@@ -274,7 +270,6 @@ public class InAppBrowser extends CordovaPlugin {
                         ((InAppBrowserClient)inAppWebView.getWebViewClient()).waitForBeforeload = false;
                     }
                     inAppWebView.loadUrl(url);
-
                 }
             });
         }
@@ -804,7 +799,7 @@ public class InAppBrowser extends CordovaPlugin {
                 RelativeLayout toolbar = new RelativeLayout(cordova.getActivity());
                 //Please, no more black!
                 toolbar.setBackgroundColor(toolbarColor);
-                toolbar.setLayoutParams(new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, this.dpToPixels(TOOLBAR_HEIGHT)));
+                toolbar.setLayoutParams(new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, this.dpToPixels(44)));
                 toolbar.setPadding(this.dpToPixels(2), this.dpToPixels(2), this.dpToPixels(2), this.dpToPixels(2));
                 if (leftToRight) {
                     toolbar.setHorizontalGravity(Gravity.LEFT);
@@ -906,7 +901,7 @@ public class InAppBrowser extends CordovaPlugin {
                     _footerColor = android.graphics.Color.LTGRAY;
                 }
                 footer.setBackgroundColor(_footerColor);
-                RelativeLayout.LayoutParams footerLayout = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, this.dpToPixels(TOOLBAR_HEIGHT));
+                RelativeLayout.LayoutParams footerLayout = new RelativeLayout.LayoutParams(LayoutParams.MATCH_PARENT, this.dpToPixels(44));
                 footerLayout.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM, RelativeLayout.TRUE);
                 footer.setLayoutParams(footerLayout);
                 if (closeButtonCaption != "") footer.setPadding(this.dpToPixels(8), this.dpToPixels(8), this.dpToPixels(8), this.dpToPixels(8));
@@ -915,6 +910,7 @@ public class InAppBrowser extends CordovaPlugin {
 
                 View footerClose = createCloseButton(7);
                 footer.addView(footerClose);
+
 
                 // WebView
                 inAppWebView = new WebView(cordova.getActivity());
@@ -948,30 +944,6 @@ public class InAppBrowser extends CordovaPlugin {
                 settings.setJavaScriptCanOpenWindowsAutomatically(true);
                 settings.setBuiltInZoomControls(showZoomControls);
                 settings.setPluginState(android.webkit.WebSettings.PluginState.ON);
-                
-                // download event
-                
-                inAppWebView.setDownloadListener(
-                    new DownloadListener(){
-                        public void onDownloadStart(
-                                String url, String userAgent, String contentDisposition, String mimetype, long contentLength
-                        ){
-                            try{
-                                JSONObject succObj = new JSONObject();
-                                succObj.put("type", DOWNLOAD_EVENT);
-                                succObj.put("url",url);
-                                succObj.put("userAgent",userAgent);
-                                succObj.put("contentDisposition",contentDisposition);
-                                succObj.put("mimetype",mimetype);
-                                succObj.put("contentLength",contentLength);
-                                sendUpdate(succObj, true);
-                            }
-                            catch(Exception e){
-                                LOG.e(LOG_TAG,e.getMessage());
-                            }
-                        }
-                    }
-                );        
 
                 // Add postMessage interface
                 class JsObject {
@@ -998,7 +970,7 @@ public class InAppBrowser extends CordovaPlugin {
                     settings.setUserAgentString(overrideUserAgent);
                 }
                 if (appendUserAgent != null) {
-                    settings.setUserAgentString(settings.getUserAgentString() + " " + appendUserAgent);
+                    settings.setUserAgentString(settings.getUserAgentString() + appendUserAgent);
                 }
 
                 //Toggle whether this is enabled or not!

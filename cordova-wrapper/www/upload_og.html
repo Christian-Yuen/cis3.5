@@ -1,64 +1,73 @@
+<!DOCTYPE html>
 <html>
-<head><style data-emotion="css" data-s=""></style>
+<head>
   <meta charset="utf-8">
   <title>Upload</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="my-frontend-app/config/environment" content="%7B%22modulePrefix%22%3A%22my-frontend-app%22%2C%22environment%22%3A%22production%22%2C%22rootURL%22%3A%22%2F%22%2C%22locationType%22%3A%22history%22%2C%22EmberENV%22%3A%7B%22EXTEND_PROTOTYPES%22%3Afalse%2C%22FEATURES%22%3A%7B%7D%2C%22_APPLICATION_TEMPLATE_WRAPPER%22%3Afalse%2C%22_DEFAULT_ASYNC_OBSERVERS%22%3Atrue%2C%22_JQUERY_INTEGRATION%22%3Afalse%2C%22_NO_IMPLICIT_ROUTE_MODEL%22%3Atrue%2C%22_TEMPLATE_ONLY_GLIMMER_COMPONENTS%22%3Atrue%7D%2C%22APP%22%3A%7B%22name%22%3A%22my-frontend-app%22%2C%22version%22%3A%220.0.0%2Be215b3da%22%7D%7D">
+
+  <!-- ADD FIREBASE SCRIPTS HERE - They must come first! -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+
+  <!-- Your CSS files -->
   <link integrity="" rel="stylesheet" href="/assets/vendor-d41d8cd98f00b204e9800998ecf8427e.css">
   <link integrity="" rel="stylesheet" href="/assets/my-frontend-app-d41d8cd98f00b204e9800998ecf8427e.css">
-  <script  type="module" src="js/upload.js" ></script>
 
-  <style data-styled="active" data-styled-version="5.3.8">
+  <style>
     /* Popup Styles */
-.popup {
-  width: 400px;
-  background: #fff;
-  border-radius: 6px;
-  text-align: center;
-  padding: 0 30px 30px;
-  color: #333;
-  visibility: hidden;
-  transition: transform 0.4s, opacity 0.4s;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0.8);
-  opacity: 0;
-}
+    .popup {
+      width: 400px;
+      background: #fff;
+      border-radius: 6px;
+      text-align: center;
+      padding: 0 30px 30px;
+      color: #333;
+      visibility: hidden;
+      transition: transform 0.4s, opacity 0.4s;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0.8);
+      opacity: 0;
+      z-index: 10000;
+    }
 
-.open-popup {
-  visibility: visible;
-  transform: translate(-50%, -50%) scale(1);
-  opacity: 1;
-}
+    .open-popup {
+      visibility: visible;
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
+    }
 
-.popup img {
-  width: 100px;
-  margin-top: -50px;
-  border-radius: 50%;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
+    .popup img {
+      width: 100px;
+      margin-top: -50px;
+      border-radius: 50%;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
 
-.popup h2 {
-  font-size: 38px;
-  font-weight: 500;
-  margin: 30px 0 10px;
-}
+    .popup h2 {
+      font-size: 38px;
+      font-weight: 500;
+      margin: 30px 0 10px;
+    }
 
-.popup button {
-  width: 100%;
-  margin-top: 50px;
-  padding: 10px 0;
-  background: #62931B;
-  color: #fff;
-  border: 0;
-  outline: none;
-  font-size: 18px;
-  border-radius: 4px;
-  cursor: pointer;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-}
+    .popup button {
+      width: 100%;
+      margin-top: 50px;
+      padding: 10px 0;
+      background: #62931B;
+      color: #fff;
+      border: 0;
+      outline: none;
+      font-size: 18px;
+      border-radius: 4px;
+      cursor: pointer;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
     @font-face {
       font-family: 'Inter';
       font-weight: 6;
@@ -70,6 +79,7 @@
       font-weight: 4;
       src: url('fonts/Inter/Inter-Thin.ttf') format('truetype');
     }
+
     @font-face {
       font-family: 'Inter';
       font-weight: 5;
@@ -83,6 +93,8 @@
       font-size: 16px;
       border: none;
       cursor: pointer;
+      width: 100%;
+      border-radius: 8px;
     }
 
     .dropbtn:hover, .dropbtn:focus {
@@ -92,16 +104,18 @@
     .dropdown {
       position: relative;
       display: inline-block;
+      width: 100%;
     }
 
     .dropdown-content {
       display: none;
       position: absolute;
       background-color: #f6f6f6;
-      min-width: 230px;
+      min-width: 100%;
       overflow: auto;
       border: 1px solid #ddd;
-      z-index: 1;
+      z-index: 1000;
+      box-sizing: border-box;
     }
 
     .dropdown-content a {
@@ -111,17 +125,28 @@
       display: block;
       font-family: Inter;
       font-weight: 5;
-    } .nav-bar {
-        width: 100%;
-        height: 75px;
-        position: fixed;
-        bottom: 0;
-        background: #FAFAFA;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-top: 0.5px solid #BDC5CD;
-      }
+    }
+
+    .dropdown a:hover {
+      background-color: #ddd;
+    }
+
+    .show {
+      display: block;
+    }
+
+    .nav-bar {
+      width: 100%;
+      height: 75px;
+      position: fixed;
+      bottom: 0;
+      background: #FAFAFA;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-top: 0.5px solid #BDC5CD;
+      z-index: 1000;
+    }
 
     .nav-icons {
       display: flex;
@@ -134,20 +159,17 @@
       height: 32px;
     }
 
-
-    .dropdown a:hover {background-color: #ddd;}
-
-    .show {display: block;}
-
     /* Item description styles */
     .description-container {
-      width: 270px;
+      width: 100%;
       height: 100px;
       background: #F6F6F6;
       border-radius: 8px;
       border: 1px #E8E8E8 solid;
       padding: 16px;
-      margin-top: 10px;
+      margin-top: 15px;
+      margin-bottom: 15px;
+      box-sizing: border-box;
     }
 
     #item_description {
@@ -168,6 +190,7 @@
       height: calc(100vh - 150px);
       overflow-y: auto;
       padding-bottom: 100px;
+      width: 100%;
     }
 
     /* Image upload box */
@@ -176,11 +199,108 @@
       height: 300px;
       margin: 10px auto 20px;
       position: relative;
+      cursor: pointer;
+    }
+
+    /* Form container */
+    .form-container {
+      width: 300px;
+      margin: 0 auto;
+      position: relative;
+      box-sizing: border-box;
+    }
+
+    /* Input field styles */
+    .input-field {
+      width: 100%;
+      height: 50px;
+      margin-bottom: 15px;
+      position: relative;
+    }
+
+    .input-field > div {
+      width: 100%;
+      height: 50px;
+      background: #F6F6F6;
+      border-radius: 8px;
+      border: 1px #E8E8E8 solid;
+    }
+
+    .input-field input {
+      position: absolute;
+      left: 16px;
+      top: 16px;
+      width: calc(100% - 32px);
+      color: #000000;
+      font-size: 16px;
+      font-family: Inter;
+      font-weight: 5;
+      border: none;
+      background: transparent;
+      outline: none;
+    }
+
+    /* Checkbox styles */
+    .checkbox-label {
+      padding: 8px 16px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .checkbox-label input {
+      margin-right: 8px;
+    }
+
+    /* Submit button */
+    .submit-button {
+      width: 100%;
+      height: 50px;
+      background: #62931B;
+      border-radius: 8px;
+      border: none;
+      color: white;
+      font-size: 16px;
+      font-weight: 700;
+      margin: 20px 0 100px;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .submit-button:disabled {
+      background: #cccccc;
+      cursor: not-allowed;
+    }
+
+    /* Loading overlay */
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10001;
+      display: none;
+    }
+
+    .loading-spinner {
+      color: white;
+      font-size: 20px;
+      font-family: 'Inter', sans-serif;
     }
   </style>
 </head>
 
-<body class="ember-application" data-new-gr-c-s-check-loaded="14.1163.0" data-gr-ext-installed="">
+<body>
+<!-- Loading overlay -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-spinner">Uploading...</div>
+</div>
+
 <!-- Main Body -->
 <div style="width: 100%; background: white; position: relative;">
   <!-- Scrollable container -->
@@ -189,25 +309,24 @@
       <div style="text-align: center; color: black; font-size: 30px; font-family: Inter; font-weight: 6; word-wrap: break-word">Upload</div>
     </div>
 
-    <!-- Photo Upload (smaller and moved up) -->
-    <div class="image-upload-box">
-      <img id="item-picture" src="images/upload-photo-placeholder.jpeg" style="width: 100%; height: 100%; object-fit: cover;">
-      <label for="fileInp" style="width: 100%; height: 100%; position: absolute; top: 0; left: 0; display: flex; align-items: center; justify-content: center;"></label>
-      <input type="file" id="fileInp" accept="image/png, image/jpeg, image/jpg" onchange="loadFile(event)" style="display: none"/>
+    <!-- Photo Upload -->
+    <div class="image-upload-box" onclick="document.getElementById('fileInp').click()">
+      <img id="item-picture" src="images/upload-photo-placeholder.jpeg" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+      <input type="file" id="fileInp" accept="image/png, image/jpeg, image/jpg" style="display: none"/>
     </div>
 
     <!-- Form Fields Container -->
-    <div style="width: 300px; margin: 0 auto; position: relative;">
+    <div class="form-container">
       <!-- Item name input -->
-      <div style="width: 100%; height: 50px; margin-bottom: 15px; position: relative;">
-        <div style="width: 100%; height: 50px; background: #F6F6F6; border-radius: 8px; border: 1px #E8E8E8 solid"></div>
-        <input placeholder="Item Name..." id="item_name" type="text" style="position: absolute; left: 16px; top: 16px; width: calc(100% - 32px); color: #000000; font-size: 16px; font-family: Inter; font-weight: 5; border: none; background: transparent; outline: none;">
+      <div class="input-field">
+        <div></div>
+        <input placeholder="Item Name..." id="item_name" type="text">
       </div>
 
       <!-- Quantity input -->
-      <div style="width: 100%; height: 50px; margin-bottom: 15px; position: relative;">
-        <div style="width: 100%; height: 50px; background: #F6F6F6; border-radius: 8px; border: 1px #E8E8E8 solid"></div>
-        <input placeholder="Quantity..." id="quantity" type="text" style="position: absolute; left: 16px; top: 16px; width: calc(100% - 32px); color: #000000; font-size: 16px; font-family: Inter; font-weight: 5; border: none; background: transparent; outline: none;">
+      <div class="input-field">
+        <div></div>
+        <input placeholder="Quantity..." id="quantity" type="number" min="1">
       </div>
 
       <!-- Item description -->
@@ -216,9 +335,9 @@
       </div>
 
       <!-- Select listing Category dropdown menu -->
-      <div class="dropdown" style="width: 100%; margin: 15px 0;">
-        <button onclick="showDropdown()" id="dropdown_button" class="dropbtn" style="width: 100%; height: 50px; border-radius: 8px;">Item Category</button>
-        <div id="myDropdown" class="dropdown-content" style="width: 100%;">
+      <div class="dropdown" style="margin: 15px 0;">
+        <button onclick="showDropdown()" id="dropdown_button" class="dropbtn">Item Category</button>
+        <div id="myDropdown" class="dropdown-content">
           <a onclick="selectedCategory('Food')">Food</a>
           <a onclick="selectedCategory('Clothing')">Clothing</a>
           <a onclick="selectedCategory('Sports Equipment')">Sports Equipment</a>
@@ -230,38 +349,38 @@
       </div>
 
       <!-- Year level dropdown -->
-      <div class="dropdown" style="width: 100%; margin: 15px 0;">
-        <button onclick="showYearDropdown()" id="yearLevel_button" class="dropbtn" style="width: 100%; height: 50px; border-radius: 8px;">Select Recommended Year Levels</button>
-        <div id="yearDropdown" class="dropdown-content" style="width: 100%;">
-          <label style="padding: 8px 16px; display: block;">
+      <div class="dropdown" style="margin: 15px 0;">
+        <button onclick="showYearDropdown()" id="yearLevel_button" class="dropbtn">Select Recommended Year Levels</button>
+        <div id="yearDropdown" class="dropdown-content">
+          <label class="checkbox-label">
             <input type="checkbox" value="7"> Year 7
           </label>
-          <label style="padding: 8px 16px; display: block;">
+          <label class="checkbox-label">
             <input type="checkbox" value="8"> Year 8
           </label>
-          <label style="padding: 8px 16px; display: block;">
+          <label class="checkbox-label">
             <input type="checkbox" value="9"> Year 9
           </label>
-          <label style="padding: 8px 16px; display: block;">
+          <label class="checkbox-label">
             <input type="checkbox" value="10"> Year 10
           </label>
-          <label style="padding: 8px 16px; display: block;">
+          <label class="checkbox-label">
             <input type="checkbox" value="11"> Year 11
           </label>
-          <label style="padding: 8px 16px; display: block;">
+          <label class="checkbox-label">
             <input type="checkbox" value="12"> Year 12
           </label>
-          <label style="padding: 8px 16px; display: block;">
+          <label class="checkbox-label">
             <input type="checkbox" value="13"> Year 13
           </label>
-          <label style="padding: 8px 16px; display: block;">
+          <label class="checkbox-label">
             <input type="checkbox" value="not-student"> Not-Student
           </label>
         </div>
       </div>
 
       <!-- Submit button -->
-      <button id="submit_button" style="width: 100%; height: 50px; background: #62931B; border-radius: 8px; border: none; color: white; font-size: 16px; font-weight: 7; margin: 20px 0 100px;">
+      <button id="submit_button" class="submit-button">
         Submit
       </button>
     </div>
@@ -286,9 +405,53 @@
   </div>
 </div>
 
+<!-- INLINE SCRIPTS (MINIMAL - Only UI functions) -->
 <script>
+  // Image preview function
+  function loadFile(event) {
+    var output = document.getElementById('item-picture');
+    if (event.target.files && event.target.files[0]) {
+      output.src = URL.createObjectURL(event.target.files[0]);
+      output.onload = function() {
+        URL.revokeObjectURL(output.src); // Free up memory
+      }
+    }
+  }
+
+  // Attach file input change listener
+  document.getElementById('fileInp').addEventListener('change', loadFile);
+
+  // Dropdown functions
+  function showDropdown() {
+    document.getElementById("myDropdown").classList.toggle("show");
+  }
+
+  function selectedCategory(category) {
+    const button = document.getElementById('dropdown_button');
+    button.textContent = category;
+    // Close dropdown after selection
+    document.getElementById("myDropdown").classList.remove("show");
+  }
+
+  function showYearDropdown() {
+    document.getElementById("yearDropdown").classList.toggle("show");
+  }
+
+  // Update selected year levels display
+  document.getElementById('yearDropdown').addEventListener('change', function(e) {
+    if (e.target.type === 'checkbox') {
+      const selected = Array.from(document.querySelectorAll('#yearDropdown input:checked'))
+        .map(checkbox => {
+          const label = checkbox.parentElement;
+          return label.textContent.trim();
+        });
+      const button = document.getElementById('yearLevel_button');
+      button.textContent = selected.join(', ') || 'Select Recommended Year Levels';
+    }
+  });
+
   // Close dropdowns when clicking outside
-  window.onclick = function(event) {
+  document.addEventListener('click', function(event) {
     if (!event.target.matches('.dropbtn')) {
       var dropdowns = document.getElementsByClassName("dropdown-content");
       for (var i = 0; i < dropdowns.length; i++) {
@@ -298,44 +461,8 @@
         }
       }
     }
-  }
-
-  // Year level dropdown functions
-  function showYearDropdown() {
-    document.getElementById("yearDropdown").classList.toggle("show");
-  }
-
-  // Update selected year levels display
-  document.getElementById('yearDropdown').addEventListener('change', function(e) {
-    const selected = Array.from(document.querySelectorAll('#yearDropdown input:checked'))
-      .map(checkbox => checkbox.parentElement.textContent.trim());
-    const button = document.getElementById('yearLevel_button');
-    button.textContent = selected.join(', ') || 'Select Recommended Year Levels';
   });
-</script>
 
-<script>
-  // load photo function
-  var loadFile = function(event) {
-    var output = document.getElementById('item-picture');
-    output.src = URL.createObjectURL(event.target.files[0]);
-    output.onload = function() {
-      URL.revokeObjectURL(output.src) // Free up memory
-    }
-  };
-
-  // dropdown selection menu functions
-  function showDropdown() {
-    document.getElementById("myDropdown").classList.toggle("show");
-  }
-
-  function selectedCategory(category) {
-    const button = document.getElementById('dropdown_button');
-    button.textContent = category;
-  }
-</script>
-
-<script>
   // Function to reset all form fields
   function resetFields() {
     // Reset the image preview to a placeholder
@@ -385,25 +512,15 @@
     }
   }
 
-  // Function to open the popup
-  function openPopup() {
-    const popup = document.getElementById('popup');
-    if (popup) {
-      popup.classList.add('open-popup');
-    }
-  }
-
-  // Function to close the popup and reset fields when "OK" is clicked
-  function closePopup() {
-    const popup = document.getElementById('popup');
-    if (popup) {
-      popup.classList.remove('open-popup');
-    }
-
-    // Call resetFields to clear all form inputs
-    resetFields();
-  }
+  // Make functions available globally
+  window.resetFields = resetFields;
+  window.showDropdown = showDropdown;
+  window.showYearDropdown = showYearDropdown;
+  window.selectedCategory = selectedCategory;
 </script>
+
+<!-- Your upload.js should come LAST -->
+<script src="js/upload.js"></script>
 
 </body>
 </html>

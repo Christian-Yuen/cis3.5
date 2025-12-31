@@ -22,28 +22,8 @@
     <string>????</string>
     <key>CFBundleVersion</key>
     <string>1.0.0</string>
-    <key>FirebaseMessagingAutoInitEnabled</key>
-    <true/>
     <key>LSRequiresIPhoneOS</key>
     <true/>
-    <key>NSAppTransportSecurity</key>
-    <dict>
-      <key>NSExceptionDomains</key>
-      <dict>
-        <key>firebaseio.com</key>
-        <dict>
-          <key>NSIncludesSubdomains</key>
-          <true/>
-        </dict>
-        <key>googleapis.com</key>
-        <dict>
-          <key>NSIncludesSubdomains</key>
-          <true/>
-        </dict>
-      </dict>
-      <key>NSAllowsArbitraryLoads</key>
-      <true/>
-    </dict>
     <key>NSMainNibFile</key>
     <string/>
     <key>NSMainNibFile~ipad</key>
@@ -85,6 +65,46 @@
         </dict>
       </dict>
     </array>
+    <key>NSAppTransportSecurity</key>
+    <dict>
+      <key>NSAllowsArbitraryLoads</key>
+      <true/>
+      <key>NSExceptionDomains</key>
+      <dict>
+        <key>firestore.googleapis.com</key>
+        <dict/>
+        <key>googleapis.com</key>
+        <dict>
+          <key>NSIncludesSubdomains</key>
+          <true/>
+        </dict>
+        <key>firebaseapp.com</key>
+        <dict>
+          <key>NSIncludesSubdomains</key>
+          <true/>
+        </dict>
+        <key>google.com</key>
+        <dict>
+          <key>NSIncludesSubdomains</key>
+          <true/>
+        </dict>
+        <key>firebaseio.com</key>
+        <dict>
+          <key>NSIncludesSubdomains</key>
+          <true/>
+        </dict>
+        <key>www.googleapis.com</key>
+        <dict/>
+      </dict>
+    </dict>
+    <key>UIBackgroundModes</key>
+    <array>
+      <string>remote-notification</string>
+    </array>
+    <key>FIREBASE_MESSAGING_IMMEDIATE_PAYLOAD_DELIVERY</key>
+    <string>false</string>
+    <key>FirebaseMessagingAutoInitEnabled</key>
+    <true/>
     <key>CFBundleURLTypes</key>
     <array>
       <dict>

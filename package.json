@@ -12,6 +12,15 @@
   },
   "scripts": {
     "build": "ember build --environment=production",
+    "build:cordova": "ember build --environment=production --output-path=../cordova-wrapper/www",
+    "cordova:sync": "rsync -av --delete dist/ ../cordova-wrapper/www/ || cp -R dist/* ../cordova-wrapper/www/",
+    "cordova:prepare": "npm run build && npm run cordova:sync",
+    "cordova:ios": "npm run cordova:prepare && cd ../cordova-wrapper && cordova build ios",
+    "cordova:ios:emulate": "npm run cordova:prepare && cd ../cordova-wrapper && cordova emulate ios",
+    "cordova:ios:device": "npm run cordova:prepare && cd ../cordova-wrapper && cordova run ios --device",
+    "cordova:clean": "rm -rf ../cordova-wrapper/www/* && rm -rf dist tmp",
+    "dev:cordova": "ember serve --port=4200",
+
     "lint": "concurrently \"npm:lint:*(!fix)\" --names \"lint:\"",
     "lint:css": "stylelint \"**/*.css\"",
     "lint:css:fix": "concurrently \"npm:lint:css -- --fix\"",
@@ -45,6 +54,7 @@
     "ember-cli-inject-live-reload": "^2.1.0",
     "ember-cli-sri": "^2.1.1",
     "ember-cli-terser": "^4.0.2",
+    "ember-cordova": "^1.0.9",
     "ember-data": "~5.3.3",
     "ember-fetch": "^8.1.2",
     "ember-load-initializers": "^2.1.2",
@@ -72,6 +82,7 @@
     "tracked-built-ins": "^3.3.0",
     "webpack": "^5.90.3"
   },
+
   "engines": {
     "node": ">= 18"
   },

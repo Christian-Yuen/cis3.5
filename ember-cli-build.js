@@ -1,11 +1,30 @@
 'use strict';
-
 const EmberApp = require('ember-cli/lib/broccoli/ember-app');
+const funnel = require('broccoli-funnel');
+const merge = require('broccoli-merge-trees');
 
 module.exports = function (defaults) {
-  const app = new EmberApp(defaults, {
-    // Add options here
+  let app = new EmberApp(defaults, {
+    // Your Ember config
+    fingerprint: {
+      enabled: false  // Disable for Cordova
+    },
+    outputPaths: {
+      app: {
+        html: 'index.html'
+      }
+    }
   });
 
-  return app.toTree();
+  // Get the Ember tree
+  let tree = app.toTree();
+
+  // Copy to cordova/www during build
+  if (process.env.CORDOVA) {
+    tree = funnel(tree, {
+      destDir: 'cordova/www'
+    });
+  }
+
+  return tree;
 };
