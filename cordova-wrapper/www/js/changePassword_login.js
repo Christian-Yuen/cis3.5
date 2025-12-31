@@ -20,7 +20,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 document.addEventListener('DOMContentLoaded', function () {
-  const sendEmailButton = document.getElementById('reset'); // Ensure this ID matches your HTML button ID
+  const sendEmailButton = document.getElementById('reset');
   sendEmailButton.addEventListener('click', function () {
     const email = document.getElementById('email').value;
     if (email) {

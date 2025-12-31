@@ -1,40 +1,55 @@
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js';
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js';
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Login page loaded');
 
+    // Firebase configuration
+    const firebaseConfig = {
+        apiKey: 'AIzaSyBk19z0f3n7ixniq-f7Bq1Zj4NYIXAZ7oI',
+        authDomain: 'shareable-37f85.firebaseapp.com',
+        projectId: 'shareable-37f85',
+        storageBucket: 'shareable-37f85.appspot.com',
+        messagingSenderId: '542630327474',
+        appId: '1:542630327474:web:8258d25c6c24e0384185ab',
+        measurementId: 'G-C3YDL8XPHE'
+    };
 
-const firebaseConfig = {
-  apiKey: 'AIzaSyBk19z0f3n7ixniq-f7Bq1Zj4NYIXAZ7oI',
-  authDomain: 'shareable-37f85.firebaseapp.com',
-  projectId: 'shareable-37f85',
-  storageBucket: 'shareable-37f85.appspot.com',
-  messagingSenderId: '542630327474',
-  appId: '1:542630327474:web:8258d25c6c24e0384185ab',
-  measurementId: 'G-C3YDL8XPHE',
-};
+    if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+        console.log('Firebase initialized');
+    }
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+    const auth = firebase.auth();
 
-document.getElementById('login').addEventListener('click', function() {
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;
-
-  signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      var cur = auth.currentUser;
-      console.log(cur.id);
-      alert('Login successful!');
-      console.log(cur);
-      window.location.href = 'home.html';
-
-    })
-    .catch((error) => {
-      console.error(error);
-      alert(`Login failed! Error: ${error.message}`);
+    auth.onAuthStateChanged(function(user) {
+        if (user) {
+            console.log('User already logged in, redirecting...');
+            window.location.href = 'home.html';
+        }
     });
-});
 
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-  }
+    // Handle login button click
+    const loginButton = document.getElementById('login');
+    if (loginButton) {
+        loginButton.addEventListener('click', function() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            if (!email || !password) {
+                alert('Please enter email and password');
+                return;
+            }
+
+            console.log('Attempting login...');
+
+            auth.signInWithEmailAndPassword(email, password)
+                .then(function(userCredential) {
+                    console.log('Login successful!');
+                    alert('Login successful!');
+                    window.location.href = 'home.html';
+                })
+                .catch(function(error) {
+                    console.error('Login error:', error);
+                    alert('Login failed: ' + error.message);
+                });
+        });
+    }
 });

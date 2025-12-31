@@ -1,3 +1,31 @@
+# Version 19.0.1
+* (ios) fix: Migrate to new Firebase Analytics module structure for SDK >= 11.14.0
+    * Merged from PR [#960](https://github.com/dpa99c/cordova-plugin-firebasex/pull/960)
+    * Resolves [#959](https://github.com/dpa99c/cordova-plugin-firebasex/issues/959)
+
+# Version 19.0.0
+* (ios) BREAKING: Update pinned default Firebase iOS SDK version from v11.8.0 to v12.3.0 - September 15, 2025
+    * https://firebase.google.com/support/release-notes/ios#version_1230_-_september_15_2025
+    * Changes minimum iOS deployment version from 13.0 to 15.0.
+    * Also updated:
+        * GoogleSignIn from v7.1.0 to v9.0.0
+        * GoogleTagManager from v8.0.0 to v9.0.0
+* (android) Update pinned default Firebase Android SDK versions to BOM v34.3.0 - September 18, 2025
+    * https://firebase.google.com/support/release-notes/android#2025-09-18
+* (android) bugfix: Plugin raises error on some devices at startup if ID token is refreshed before plugin is initialized.
+    * Merged from PR [#954](https://github.com/dpa99c/cordova-plugin-firebasex/pull/954)
+    * Resolves [#925](https://github.com/dpa99c/cordova-plugin-firebasex/issues/925)
+* (android) bugfix: Wait for plugin to be initialized before executing pending JS calls.
+    * Merged from PR [#942](https://github.com/dpa99c/cordova-plugin-firebasex/pull/942)
+* (ios) bugfix: Add isContentAvailable check before displaying foreground notification so it's not shown twice
+* (ios) Fix detection of content-available key in APNS payload
+    * Resolves [#938](https://github.com/dpa99c/cordova-plugin-firebasex/issues/938) and [#624](https://github.com/dpa99c/cordova-plugin-firebasex/issues/624)
+
+
+# Version 18.0.7
+* (android) fix: remove Google Services plugin configuration so it doesn't conflict with `cordova-android@14` and use Cordova config to enable the plugin instead.
+  * Resolves [#931](https://github.com/dpa99c/cordova-plugin-firebasex/issues/931)
+
 # Version 18.0.6
 * (ios) bugfix: Force token refresh when calling getClaims
     * Merged from PR [#919](https://github.com/dpa99c/cordova-plugin-firebasex/pull/919)

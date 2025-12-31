@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<plugin id="cordova-plugin-firebasex" version="18.0.6"
+<plugin id="cordova-plugin-firebasex" version="19.0.1"
 	xmlns="http://apache.org/cordova/ns/plugins/1.0"
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"
@@ -9,9 +9,9 @@
 	<license>MIT</license>
 
 	<engines>
-		<engine name="cordova" version=">=9" />
-		<engine name="cordova-android" version=">=8" />
-		<engine name="cordova-ios" version=">=5 || 8.0.0-beta.1" />
+		<engine name="cordova" version=">=12" />
+		<engine name="cordova-android" version=">=14" />
+		<engine name="cordova-ios" version=">=7 || 8.0.0-beta.1" />
 	</engines>
 
 	<preference name="FIREBASE_ANALYTICS_COLLECTION_ENABLED" default="true" />
@@ -34,6 +34,9 @@
 		<js-module name="FirebasePlugin" src="www/firebase.js">
 			<clobbers target="FirebasePlugin" />
 		</js-module>
+		<config-file target="config.xml" parent="/*">
+			<preference name="GradlePluginGoogleServicesEnabled" value="true" />
+		</config-file>
 		<config-file parent="/*" target="res/xml/config.xml">
 			<preference name="FIREBASE_MESSAGING_IMMEDIATE_PAYLOAD_DELIVERY" value="$FIREBASE_MESSAGING_IMMEDIATE_PAYLOAD_DELIVERY" />
 			<feature name="FirebasePlugin">
@@ -82,21 +85,21 @@
 		<!-- Default versions for Gradle dependencies -->
 		<preference name="ANDROID_PLAY_SERVICES_TAGMANAGER_VERSION" default="18.1.1" />
 		<preference name="ANDROID_PLAY_SERVICES_AUTH_VERSION" default="21.3.0" />
-		<preference name="ANDROID_FIREBASE_ANALYTICS_VERSION" default="22.2.0" />
-		<preference name="ANDROID_FIREBASE_MESSAGING_VERSION" default="24.1.0" />
-		<preference name="ANDROID_FIREBASE_CONFIG_VERSION" default="22.1.0" />
-		<preference name="ANDROID_FIREBASE_PERF_VERSION" default="21.0.4" />
-		<preference name="ANDROID_FIREBASE_AUTH_VERSION" default="23.2.0" />
-		<preference name="ANDROID_FIREBASE_INAPPMESSAGING_VERSION" default="21.0.1" />
-		<preference name="ANDROID_FIREBASE_FIRESTORE_VERSION" default="25.1.2" />
-		<preference name="ANDROID_FIREBASE_FUNCTIONS_VERSION" default="21.1.0" />
+		<preference name="ANDROID_FIREBASE_ANALYTICS_VERSION" default="23.0.0" />
+		<preference name="ANDROID_FIREBASE_MESSAGING_VERSION" default="25.0.1" />
+		<preference name="ANDROID_FIREBASE_CONFIG_VERSION" default="23.0.1" />
+		<preference name="ANDROID_FIREBASE_PERF_VERSION" default="22.0.2" />
+		<preference name="ANDROID_FIREBASE_AUTH_VERSION" default="24.0.1" />
+		<preference name="ANDROID_FIREBASE_INAPPMESSAGING_VERSION" default="22.0.1" />
+		<preference name="ANDROID_FIREBASE_FIRESTORE_VERSION" default="26.0.1" />
+		<preference name="ANDROID_FIREBASE_FUNCTIONS_VERSION" default="22.0.1" />
 		<preference name="ANDROID_FIREBASE_IID_VERSION" default="21.1.0" /> <!-- deprecated but required by firebase-messaging -->
-		<preference name="ANDROID_FIREBASE_INSTALLATIONS_VERSION" default="18.0.0" />
-		<preference name="ANDROID_FIREBASE_CRASHLYTICS_VERSION" default="19.4.0" />
-		<preference name="ANDROID_FIREBASE_CRASHLYTICS_NDK_VERSION" default="19.4.0" />
-		<preference name="ANDROID_GSON_VERSION" default="2.11.0" />
-		<preference name="ANDROID_FIREBASE_PERF_GRADLE_PLUGIN_VERSION" default="1.4.2" />
-		<preference name="ANDROID_GRPC_OKHTTP" default="1.68.0" />
+		<preference name="ANDROID_FIREBASE_INSTALLATIONS_VERSION" default="19.0.1" />
+		<preference name="ANDROID_FIREBASE_CRASHLYTICS_VERSION" default="20.0.2" />
+		<preference name="ANDROID_FIREBASE_CRASHLYTICS_NDK_VERSION" default="20.0.2" />
+		<preference name="ANDROID_GSON_VERSION" default="2.13.2" />
+		<preference name="ANDROID_FIREBASE_PERF_GRADLE_PLUGIN_VERSION" default="2.0.1" />
+		<preference name="ANDROID_GRPC_OKHTTP" default="1.75.0" />
 
 		<framework src="com.google.android.gms:play-services-tagmanager:$ANDROID_PLAY_SERVICES_TAGMANAGER_VERSION" />
 		<framework src="com.google.android.gms:play-services-auth:$ANDROID_PLAY_SERVICES_AUTH_VERSION" />
@@ -172,21 +175,22 @@
 				<source url="https://cdn.cocoapods.org/"/>
 			</config>
 			<pods use-frameworks="true">
-				<pod name="FirebaseCore" spec="11.8.0"/>
-				<pod name="FirebaseCoreExtension" spec="11.8.0"/>
-				<pod name="FirebaseAuth" spec="11.8.1"/>
-				<pod name="FirebaseAnalytics" spec="11.8.0"/>
-				<!--<pod name="FirebaseAnalyticsOnDeviceConversion" spec="11.8.0"/>-->
-				<pod name="FirebaseMessaging" spec="11.8.0"/>
-				<pod name="FirebasePerformance" spec="11.8.0"/>
-				<pod name="FirebaseRemoteConfig" spec="11.8.0"/>
-				<pod name="FirebaseInAppMessaging" spec="11.8.0-beta"/>
-				<pod name="FirebaseFirestore" spec="11.8.0"/>
-				<pod name="FirebaseCrashlytics" spec="11.8.0"/>
-				<pod name="FirebaseFunctions" spec="11.8.0"/>
-				<pod name="FirebaseInstallations" spec="11.8.0"/>
-				<pod name="GoogleSignIn" spec="7.1.0"/>
-				<pod name="GoogleTagManager" spec="8.0.0"/>
+				<pod name="FirebaseCore" spec="12.3.0"/>
+				<pod name="FirebaseCoreExtension" spec="12.3.0"/>
+				<pod name="FirebaseAuth" spec="12.3.0"/>
+				<pod name="FirebaseAnalytics/Core" spec="12.3.0"/>
+				<pod name="FirebaseAnalytics/IdentitySupport" spec="12.3.0"/>
+				<!--<pod name="GoogleAdsOnDeviceConversion" spec="3.1.0"/>-->
+				<pod name="FirebaseMessaging" spec="12.3.0"/>
+				<pod name="FirebasePerformance" spec="12.3.0"/>
+				<pod name="FirebaseRemoteConfig" spec="12.3.0"/>
+				<pod name="FirebaseInAppMessaging" spec="12.3.0-beta"/>
+				<pod name="FirebaseFirestore" spec="12.3.0"/>
+				<pod name="FirebaseCrashlytics" spec="12.3.0"/>
+				<pod name="FirebaseFunctions" spec="12.3.0"/>
+				<pod name="FirebaseInstallations" spec="12.3.0"/>
+				<pod name="GoogleSignIn" spec="9.0.0"/>
+				<pod name="GoogleTagManager" spec="9.0.0"/>
 			</pods>
 		</podspec>
 

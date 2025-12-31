@@ -1,10 +1,7 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.1.1/firebase-app.js';
 import { getFirestore } from 'https://www.gstatic.com/firebasejs/9.1.1/firebase-firestore.js';
+import { getAuth, setPersistence, browserLocalPersistence } from 'https://www.gstatic.com/firebasejs/9.1.1/firebase-auth.js';
 
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: 'AIzaSyBk19z0f3n7ixniq-f7Bq1Zj4NYIXAZ7oI',
   authDomain: 'shareable-37f85.firebaseapp.com',
@@ -21,4 +18,18 @@ const app = initializeApp(firebaseConfig);
 // Initialize Cloud Firestore and get a reference to the service
 const db = getFirestore(app);
 
-export { db };
+// Initialize Firebase Authentication
+const auth = getAuth(app);
+
+// ✅ Add persistence for authentication
+setPersistence(auth, browserLocalPersistence)
+  .then(() => console.log('Persistence ready'))
+  .catch(console.error);
+
+if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+  // optional emulator line - uncomment if using Firebase Auth emulator
+  // connectAuthEmulator(auth, 'http://localhost:9099');
+  console.log('Running from localhost – allowed by Firebase Auth settings');
+}
+
+export { db, auth };

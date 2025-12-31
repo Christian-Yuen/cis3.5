@@ -1,38 +1,37 @@
 {
-  "name": "com.example.myapp",
-  "displayName": "MyApp",
-  "version": "1.0.0",
-  "description": "A sample Apache Cordova application that responds to the deviceready event.",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-    "ecosystem:cordova"
-  ],
-  "author": "Apache Cordova Team",
-  "license": "Apache-2.0",
-  "devDependencies": {
-    "cordova-ios": "^7.1.1",
-    "cordova-plugin-androidx": "^1.0.2",
-    "cordova-plugin-androidx-adapter": "^1.1.3",
-    "cordova-plugin-firebase": "^2.0.6",
-    "cordova-plugin-firebasex": "^18.0.6",
-    "cordova-plugin-googleplus": "^7.0.2",
-    "cordova-plugin-inappbrowser": "^6.0.0",
-    "cordova-plugin-ionic-webview": "github:ionic-team/cordova-plugin-ionic-webview",
-    "cordova-plugin-webview": "^0.0.1"
-  },
   "cordova": {
     "platforms": [],
     "plugins": {
-      "WebViewer": {},
+      "cordova-plugin-ionic-webview": {
+        "WK_WEB_VIEW_ONLY": "true",
+        "IOS_SCHEME": "http"
+      },
+      "cordova-plugin-whitelist": {},
+      "cordova-plugin-wkwebview-engine": {},
+      "cordova-plugin-device": {},
+      "cordova-plugin-splashscreen": {},
+      "cordova-plugin-statusbar": {},
+      "cordova-plugin-console": {},
       "cordova-plugin-inappbrowser": {},
-      "cordova-plugin-ionic-webview": {}
+      "cordova-plugin-file": {},
+      "cordova-plugin-network-information": {}
     }
   },
+  "devDependencies": {
+    "cordova-ios": "^7.1.0",
+    "cordova-plugin-console": "^1.1.0",
+    "cordova-plugin-device": "^2.1.0",
+    "cordova-plugin-file": "^8.1.3",
+    "cordova-plugin-inappbrowser": "^5.0.0",
+    "cordova-plugin-ionic-webview": "^5.0.1",
+    "cordova-plugin-network-information": "^3.0.0",
+    "cordova-plugin-splashscreen": "^6.0.2",
+    "cordova-plugin-statusbar": "^2.4.3",
+    "cordova-plugin-whitelist": "^1.3.5",
+    "cordova-plugin-wkwebview-engine": "^1.2.2"
+  },
   "dependencies": {
-    "cordova": "^12.0.0",
-    "firebase": "^10.10.0"
+    "@ionic-native/firebase-x": "^5.36.0",
+    "cordova-plugin-firebasex": "^19.0.1"
   }
 }

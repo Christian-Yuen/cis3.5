@@ -1,5 +1,91 @@
 {
-    "declarations": {},
-    "sources": {},
-    "libraries": {}
+    "declarations": {
+        "use_frameworks!": {
+            "declaration": "use_frameworks!",
+            "count": 1
+        }
+    },
+    "sources": {
+        "https://cdn.cocoapods.org/": {
+            "source": "https://cdn.cocoapods.org/",
+            "count": 1
+        }
+    },
+    "libraries": {
+        "FirebaseCore": {
+            "name": "FirebaseCore",
+            "spec": "12.3.0",
+            "count": 1
+        },
+        "FirebaseCoreExtension": {
+            "name": "FirebaseCoreExtension",
+            "spec": "12.3.0",
+            "count": 1
+        },
+        "FirebaseAuth": {
+            "name": "FirebaseAuth",
+            "spec": "12.3.0",
+            "count": 1
+        },
+        "FirebaseAnalytics/Core": {
+            "name": "FirebaseAnalytics/Core",
+            "spec": "12.3.0",
+            "count": 1
+        },
+        "FirebaseAnalytics/IdentitySupport": {
+            "name": "FirebaseAnalytics/IdentitySupport",
+            "spec": "12.3.0",
+            "count": 1
+        },
+        "FirebaseMessaging": {
+            "name": "FirebaseMessaging",
+            "spec": "12.3.0",
+            "count": 1
+        },
+        "FirebasePerformance": {
+            "name": "FirebasePerformance",
+            "spec": "12.3.0",
+            "count": 1
+        },
+        "FirebaseRemoteConfig": {
+            "name": "FirebaseRemoteConfig",
+            "spec": "12.3.0",
+            "count": 1
+        },
+        "FirebaseInAppMessaging": {
+            "name": "FirebaseInAppMessaging",
+            "spec": "12.3.0-beta",
+            "count": 1
+        },
+        "FirebaseFirestore": {
+            "name": "FirebaseFirestore",
+            "spec": "12.3.0",
+            "count": 1
+        },
+        "FirebaseCrashlytics": {
+            "name": "FirebaseCrashlytics",
+            "spec": "12.3.0",
+            "count": 1
+        },
+        "FirebaseFunctions": {
+            "name": "FirebaseFunctions",
+            "spec": "12.3.0",
+            "count": 1
+        },
+        "FirebaseInstallations": {
+            "name": "FirebaseInstallations",
+            "spec": "12.3.0",
+            "count": 1
+        },
+        "GoogleSignIn": {
+            "name": "GoogleSignIn",
+            "spec": "9.0.0",
+            "count": 1
+        },
+        "GoogleTagManager": {
+            "name": "GoogleTagManager",
+            "spec": "9.0.0",
+            "count": 1
+        }
+    }
 }

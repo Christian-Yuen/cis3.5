@@ -7,16 +7,12 @@
     "files": {}
   },
   "installed_plugins": {
-    "cordova-plugin-firebase": {
+    "cordova-plugin-file": {
+      "PACKAGE_NAME": "com.example.myapp"
+    },
+    "cordova-plugin-network-information": {
       "PACKAGE_NAME": "com.example.myapp"
     }
   },
-  "dependent_plugins": {
-    "cordova-plugin-androidx": {
-      "PACKAGE_NAME": "com.example.myapp"
-    },
-    "cordova-plugin-androidx-adapter": {
-      "PACKAGE_NAME": "com.example.myapp"
-    }
-  }
+  "dependent_plugins": {}
 }

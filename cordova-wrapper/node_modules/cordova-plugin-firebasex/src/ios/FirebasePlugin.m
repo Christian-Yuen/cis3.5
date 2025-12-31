@@ -592,11 +592,14 @@ static NSMutableArray* pendingGlobalJS = nil;
 
 - (void)onTokenRefresh:(CDVInvokedUrlCommand *)command {
     self.tokenRefreshCallbackId = command.callbackId;
-    [self _getToken:^(NSString *token, NSError *error) {
-        if(error == nil && token != nil){
-            [self sendToken:token];
-        }
-    }];
+    NSString* apnsToken = [self getAPNSToken];
+    if(apnsToken != nil){
+        [self _getToken:^(NSString *token, NSError *error) {
+            if(error == nil && token != nil){
+                [self sendToken:token];
+            }
+        }];
+    }
 }
 
 - (void)onApnsTokenReceived:(CDVInvokedUrlCommand *)command {
@@ -1420,9 +1423,6 @@ static NSMutableArray* pendingGlobalJS = nil;
             }
             if([actionCodeSettingsParams objectForKey:@"url"] != nil){
                 actionCodeSettings.URL = [NSURL URLWithString: [actionCodeSettingsParams objectForKey:@"url"]];
-            }
-            if([actionCodeSettingsParams objectForKey:@"dynamicLinkDomain"] != nil){
-                actionCodeSettings.dynamicLinkDomain = [NSString stringWithString: [actionCodeSettingsParams objectForKey:@"dynamicLinkDomain"]];
             }
             if([actionCodeSettingsParams objectForKey:@"iosBundleId"] != nil){
                 actionCodeSettings.iOSBundleID = [NSString stringWithString: [actionCodeSettingsParams objectForKey:@"iosBundleId"]];

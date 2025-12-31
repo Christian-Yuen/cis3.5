@@ -1,33 +1,33 @@
+<!DOCTYPE html>
 <html>
-<head><style data-emotion="css" data-s=""></style>
+<head>
   <meta charset="utf-8">
-  <title>Home</title>
+  <title>Product Info</title>
   <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="my-frontend-app/config/environment" content="%7B%22modulePrefix%22%3A%22my-frontend-app%22%2C%22environment%22%3A%22production%22%2C%22rootURL%22%3A%22%2F%22%2C%22locationType%22%3A%22history%22%2C%22EmberENV%22%3A%7B%22EXTEND_PROTOTYPES%22%3Afalse%2C%22FEATURES%22%3A%7B%7D%2C%22_APPLICATION_TEMPLATE_WRAPPER%22%3Afalse%2C%22_DEFAULT_ASYNC_OBSERVERS%22%3Atrue%2C%22_JQUERY_INTEGRATION%22%3Afalse%2C%22_NO_IMPLICIT_ROUTE_MODEL%22%3Atrue%2C%22_TEMPLATE_ONLY_GLIMMER_COMPONENTS%22%3Atrue%7D%2C%22APP%22%3A%7B%22name%22%3A%22my-frontend-app%22%2C%22version%22%3A%220.0.0%2Be215b3da%22%7D%7D">
-  <link integrity="" rel="stylesheet" href="/assets/vendor-d41d8cd98f00b204e9800998ecf8427e.css">
-  <link integrity="" rel="stylesheet" href="/assets/my-frontend-app-d41d8cd98f00b204e9800998ecf8427e.css">
-  <script type="module" src="js/product_info.js" ></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
-  <style data-styled="active" data-styled-version="5.3.8">
-    a:link {
-      text-decoration: none;
-    }
-    a:visited {
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: none;
-    }
-    a:active {
-      text-decoration: none;
-    }
+  <!-- CSP Policy for iOS simulator -->
+  <meta http-equiv="Content-Security-Policy" content="
+        default-src 'self' https://*.gstatic.com https://*.googleapis.com https://firestore.googleapis.com https://firebasestorage.googleapis.com data: gap:;
+        script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.gstatic.com;
+        style-src 'self' 'unsafe-inline';
+        img-src 'self' data: https:;
+        connect-src 'self' https://*.googleapis.com wss://*.googleapis.com;
+    ">
+
+  <!-- Load Firebase v8 (compat) -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-storage.js"></script>
+
+  <!-- Fonts -->
+  <style>
     @font-face {
       font-family: 'Inter';
       font-weight: 600;
       src: url('fonts/Inter/Inter-SemiBold.ttf') format('truetype');
     }
-
     @font-face {
       font-family: 'Inter';
       font-weight: 400;
@@ -38,6 +38,19 @@
       font-weight: 500;
       src: url('fonts/Inter/Inter-Regular.ttf') format('truetype');
     }
+    a:link, a:visited, a:hover, a:active {
+      text-decoration: none;
+    }
+    body {
+      margin: 0;
+      padding: 0;
+      background: white;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* Navigation bar styles */
     .nav-bar {
       width: 100%;
       height: 75px;
@@ -48,73 +61,305 @@
       justify-content: center;
       align-items: center;
       border-top: 0.5px solid #BDC5CD;
+      z-index: 100;
     }
 
     .nav-icons {
       display: flex;
       justify-content: space-around;
       width: 375px;
+      max-width: 100%;
     }
 
     .nav-bar img {
       width: 32px;
       height: 32px;
     }
+
+    /* Main container */
+    .main-container {
+      width: 100%;
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px 16px 90px; /* Extra bottom padding for nav bar */
+      min-height: 100vh;
+      position: relative;
+    }
+
+    /* Fixed header */
+    .fixed-header {
+      width: 100%;
+      height: 36px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: white;
+      z-index: 1000;
+      padding: 20px 0;
+      border-bottom: 1px solid #E8E8E8;
+    }
+
+    .header-content {
+      width: 90%;
+      max-width: 400px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    .page-title {
+      text-align: center;
+      color: black;
+      font-size: 30px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      line-height: 1.2;
+    }
+
+    .back-link {
+      position: absolute;
+      left: 0;
+      color: #62931B;
+      font-size: 16px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+    }
+
+    /* Content section */
+    .content-section {
+      margin-top: 100px; /* Space for fixed header */
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    /* Product image container */
+    .product-image-container {
+      width: 100%;
+      max-width: 343px;
+      height: 228px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid #E8E8E8;
+      background: #F6F6F6;
+    }
+
+    .product-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Product details */
+    .product-details {
+      width: 100%;
+      max-width: 343px;
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      border: 1px solid #E8E8E8;
+    }
+
+    .product-name {
+      color: black;
+      font-size: 24px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .product-category {
+      color: #62931B;
+      font-size: 16px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+
+    .product-quantity {
+      color: #666;
+      font-size: 16px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      margin-bottom: 8px;
+    }
+
+    .product-time {
+      color: #BDBDBD;
+      font-size: 14px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      margin-bottom: 16px;
+    }
+
+    .product-owner {
+      color: #333;
+      font-size: 16px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .product-owner-name {
+      color: #62931B;
+      font-size: 16px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+    }
+
+    /* Button container */
+    .button-container {
+      width: 100%;
+      max-width: 343px;
+      margin-top: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .action-button {
+      width: 100%;
+      height: 50px;
+      background: #62931B;
+      color: white;
+      border: none;
+      border-radius: 100px;
+      font-size: 16px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .action-button:disabled {
+      background: #BDBDBD;
+      cursor: not-allowed;
+    }
+
+    .action-button.secondary {
+      background: #F6F6F6;
+      color: #333;
+      border: 1px solid #E8E8E8;
+    }
+
+    /* Status message */
+    .status-message {
+      width: 100%;
+      max-width: 343px;
+      padding: 12px;
+      border-radius: 8px;
+      text-align: center;
+      font-size: 16px;
+      font-family: 'Inter', sans-serif;
+      font-weight: 500;
+      margin-top: 20px;
+    }
+
+    .status-success {
+      background: #E8F5E8;
+      color: #62931B;
+      border: 1px solid #62931B;
+    }
+
+    .status-error {
+      background: #FFE8E8;
+      color: #FF6B6B;
+      border: 1px solid #FF6B6B;
+    }
+
+    .status-info {
+      background: #E8F0FF;
+      color: #4A6FFF;
+      border: 1px solid #4A6FFF;
+    }
+
+    /* Loading indicator */
+    .loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px;
+    }
+
+    .loading-spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid #F6F6F6;
+      border-top: 4px solid #62931B;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
   </style>
+
+
+
+  <!-- Load product_info.js -->
+  <script src="js/product_info.js"></script>
+
 </head>
 
+<body class="ember-application">
 
-<body class="ember-application" data-new-gr-c-s-check-loaded="14.1169.0" data-gr-ext-installed="" data-liner-extension-version="7.14.30">
-
-<!--<ul id="itemList"></ul>-->
-
-
-<!-- Main Body -->
-<div style="width: 100%; height: 500px; position: relative; display: flex; flex-direction: column; justify-content: center; align-items: center;">
-  <!-- Fixed Header -->
-  <div style="width: 90%; height: 36px; position: fixed; top: 32; display: flex; justify-content: center; align-items: center; background: white; z-index: 1000;">
-    <div style="text-align: center; color: black; font-size: 30px; font-family: Inter; font-weight: 600; word-wrap: break-word;">
-      Product Info
-    </div>
-    <a href="home.html" style="text-decoration: none; color: inherit; position: absolute; left: 10px;">
-      <div style="color: #62931B; font-size: 16px; font-family: Inter; font-weight: 500; word-wrap: break-word;">Back</div>
-    </a>
-  </div>
-  <!-- Content Section -->
-  <div id="info" style="flex-direction: column; justify-content: flex-start; align-items: center; gap: 16px; display: flex; margin-top: 120px;">
-    <!-- Content of #info goes here -->
-  </div>
-  <div id="buttondiv" style="position: relative; display: flex; justify-content: center; align-items: center; margin-top: 20px;">
-
-  </div>
-  <!-- Buttons go here -->
-
-  <!-- navigation bar -->
-  <div class="nav-bar">
-    <div class="nav-icons">
-      <a href="home.html"><img src="images/navicons/homeicon.png" alt="Home" /></a>
-      <a href="upload_og.html"><img src="images/navicons/uploadicon.png" alt="Upload" /></a>
-      <a href="profile.html"><img src="images/navicons/profileicon.png" alt="Profile" /></a>
-      <a href="setting.html"><img src="images/navicons/settingiconact.png" alt="Settings" /></a>
-    </div>
+<!-- Fixed Header -->
+<div class="fixed-header">
+  <div class="header-content">
+    <a href="home.html" class="back-link">Back 回去</a>
+    <div class="page-title">Product Info<br>產品資訊</div>
   </div>
 </div>
 
+<!-- Main Container -->
+<div class="main-container">
 
+  <!-- Content Section -->
+  <div class="content-section">
 
-<div></div><div id="Chat-Plugin-Root" class="compose-root-component"></div>
-<div></div><div id="compose-ai-general-snackbar-root"></div>
-<grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration>
+    <!-- Product image will be inserted here -->
+    <div id="product-image-container" class="product-image-container">
+      <img id="product-image" class="product-image" src="images/placeholder-image.png" alt="Product image">
+    </div>
 
+    <!-- Product details will be inserted here -->
+    <div id="product-details" class="product-details">
+      <div class="loading">
+        <div class="loading-spinner"></div>
+      </div>
+    </div>
 
-<div class="LImageHighlighter LImageHighlighter__save" data-image-id="null" style="display: none; top: 209px; left: 20px;" data-src="https://via.placeholder.com/343x228"><div class="LImageHighlighter__btn LImageHighlighter__btn--static LImageHighlighter__btn--v6"><div class="LImageHighlighter__gradient"></div><div class="LImageHighlighter__highlight LImageHighlighter__highlight--v6"><div class="LImageHighlighter__tooltip">Highlight an image</div><div class="LImageHighlighter__iconBox LImageHighlighter__iconBox--v6"><div class="LImageHighlighter__icon"></div><div class="LImageHighlighter__color" style="background: rgb(255, 255, 131);"></div></div><span class="LImageHighlighter__text LImageHighlighter__text--v6">Highlight</span></div><div class="LImageHighlighter__ask"><span class="LImageHighlighter__askText">Ask AI</span></div><div class="LImageHighlighter__optOutBox LImageHighlighter__optOutBox--v6"><div class="LImageHighlighter__tooltip">Turn off</div><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10.0044 10C9.79313 10 9.61458 9.92812 9.46875 9.78438C9.32292 9.64062 9.25 9.4625 9.25 9.25V2.75C9.25 2.5375 9.32145 2.35937 9.46435 2.21562C9.60727 2.07187 9.78435 2 9.9956 2C10.2069 2 10.3854 2.07187 10.5312 2.21562C10.6771 2.35937 10.75 2.5375 10.75 2.75V9.25C10.75 9.4625 10.6785 9.64062 10.5356 9.78438C10.3927 9.92812 10.2156 10 10.0044 10ZM10 17C9.02778 17 8.11713 16.8153 7.26806 16.4458C6.41898 16.0764 5.68009 15.5773 5.0514 14.9486C4.42269 14.3199 3.92361 13.581 3.55417 12.7319C3.18472 11.8829 3 10.9722 3 10C3 9.18647 3.13889 8.39629 3.41667 7.62944C3.69444 6.86259 4.09028 6.16667 4.60417 5.54167C4.74306 5.36111 4.91667 5.26042 5.125 5.23958C5.33333 5.21875 5.51389 5.28472 5.66667 5.4375C5.80556 5.59028 5.88194 5.76736 5.89583 5.96875C5.90972 6.17014 5.86111 6.34722 5.75 6.5C5.3409 7 5.0303 7.54861 4.81819 8.14583C4.60606 8.74306 4.5 9.36111 4.5 10C4.5 11.5321 5.03318 12.8318 6.09954 13.8991C7.16592 14.9664 8.46453 15.5 9.99538 15.5C11.5262 15.5 12.8264 14.9664 13.8958 13.8991C14.9653 12.8318 15.5 11.5321 15.5 10C15.5 9.34722 15.3889 8.72569 15.1667 8.13542C14.9444 7.54514 14.6319 6.99306 14.2292 6.47917C14.1042 6.32639 14.0486 6.14931 14.0625 5.94792C14.0764 5.74653 14.1597 5.56944 14.3125 5.41667C14.4514 5.26389 14.625 5.20139 14.8333 5.22917C15.0417 5.25694 15.2207 5.35667 15.3704 5.52835C15.9013 6.16223 16.3056 6.86111 16.5833 7.625C16.8611 8.38889 17 9.18056 17 10C17 10.9722 16.8153 11.8829 16.4458 12.7319C16.0764 13.581 15.5773 14.3199 14.9486 14.9486C14.3199 15.5773 13.581 16.0764 12.7319 16.4458C11.8829 16.8153 10.9722 17 10 17Z" fill="#9AA7B3"></path></svg></div></div><div class="L-ImageTooltip"><div class="L-ImageTooltip__main"><div class="L-ImageTooltip__gradient"></div><div class="L-ImageTooltip__wrapper"><button class="L-ImageTooltip__delete"><svg width="18" height="17" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16.3499 3.86991H12.3599C12.1299 2.19991 10.7099 0.909912 8.98989 0.909912C7.26989 0.909912 5.84989 2.20991 5.61989 3.86991H1.63989C1.22989 3.86991 0.889893 4.20991 0.889893 4.61991C0.889893 5.02991 1.22989 5.36991 1.63989 5.36991H2.23989V14.6899C2.23989 15.9399 3.24989 16.9499 4.50989 16.9499H13.5099C14.7599 16.9499 15.7799 15.9399 15.7799 14.6899V5.36991H16.3699C16.7799 5.36991 17.1199 5.02991 17.1199 4.61991C17.1199 4.20991 16.7699 3.86991 16.3499 3.86991ZM14.2599 14.6899C14.2599 15.1099 13.9199 15.4499 13.4899 15.4499H4.48989C4.06989 15.4499 3.71989 15.1099 3.71989 14.6899V5.40991H14.2499V14.6899H14.2599ZM8.98989 2.41991C9.88989 2.41991 10.6399 3.03991 10.8499 3.87991H7.12989C7.33989 3.03991 8.08989 2.41991 8.98989 2.41991Z" fill="#50555C"></path><path d="M5.59985 14.2898C6.00985 14.2898 6.34985 13.9498 6.34985 13.5398V7.32983C6.34985 6.91983 6.00985 6.57983 5.59985 6.57983C5.18985 6.57983 4.84985 6.91983 4.84985 7.32983V13.5398C4.84985 13.9498 5.18985 14.2898 5.59985 14.2898Z" fill="#50555C"></path><path d="M8.98999 14.2898C9.39999 14.2898 9.73999 13.9498 9.73999 13.5398V7.32983C9.73999 6.91983 9.39999 6.57983 8.98999 6.57983C8.57999 6.57983 8.23999 6.91983 8.23999 7.32983V13.5398C8.23999 13.9498 8.57999 14.2898 8.98999 14.2898Z" fill="#50555C"></path><path d="M12.3999 14.2898C12.8099 14.2898 13.1499 13.9498 13.1499 13.5398V7.32983C13.1499 6.91983 12.8099 6.57983 12.3999 6.57983C11.9899 6.57983 11.6499 6.91983 11.6499 7.32983V13.5398C11.6499 13.9498 11.9799 14.2898 12.3999 14.2898Z" fill="#50555C"></path></svg><div data-role="L-delete" class="L-ImageTooltip__description">Delete</div></button><div class="L-ImageTooltip__color"><button class="L-ImageTooltip__colorBtn"><div class="L-ImageTooltip__colorParts"><div class="L-ImageTooltip__colorPartItem L-First"></div></div><div class="L-ImageTooltip__colorArrow"></div></button><div class="L-ImageTooltip__colorDropdown L-Hidden"><button class="L-ImageTooltip__colorSelect" data-slot-id="0"><div class="L-ImageTooltip__colorSelectIcon L-Yellow"></div><div class="L-ImageTooltip__colorSelectText L-Yellow">Important</div></button><button class="L-ImageTooltip__colorSelect" data-slot-id="1"><div class="L-ImageTooltip__colorSelectIcon L-Mint"></div><div class="L-ImageTooltip__colorSelectText L-Mint">Important</div></button><button class="L-ImageTooltip__colorSelect" data-slot-id="2"><div class="L-ImageTooltip__colorSelectIcon L-Orange"></div><div class="L-ImageTooltip__colorSelectText L-Orange">Important</div></button><button class="L-ImageTooltip__colorSelect" data-slot-id="3"><div class="L-ImageTooltip__colorSelectIcon L-Purple"></div><div class="L-ImageTooltip__colorSelectText L-Purple">Important</div></button><button class="L-ImageTooltip__colorSelect" data-slot-id="4"><div class="L-ImageTooltip__colorSelectIcon L-Blue"></div><div class="L-ImageTooltip__colorSelectText L-Blue">Important</div></button><button class="L-ImageTooltip__colorSelect" data-slot-id="5"><div class="L-ImageTooltip__colorSelectIcon L-Pink"></div><div class="L-ImageTooltip__colorSelectText L-Pink">Important</div></button></div><div data-role="L-color" class="L-ImageTooltip__description">Change a color</div></div><button class="L-ImageTooltip__thread"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.8099 2.01001C13.6399 2.01001 14.3099 2.68001 14.3099 3.51001V9.38001C14.3099 10.21 13.6399 10.88 12.8099 10.88H10.8999C10.3999 10.88 9.92994 11.13 9.64994 11.55L7.99994 14.04L6.34994 11.56C6.06994 11.14 5.59994 10.89 5.09994 10.89H3.18994C2.35994 10.89 1.68994 10.22 1.68994 9.39001V3.51001C1.68994 2.68001 2.35994 2.01001 3.18994 2.01001H12.8099ZM12.8099 0.51001H3.18994C1.52994 0.51001 0.189941 1.85001 0.189941 3.51001V9.38001C0.189941 11.04 1.52994 12.38 3.18994 12.38H5.09994L7.03994 15.29C7.26994 15.63 7.63994 15.81 8.00994 15.81C8.37994 15.81 8.74994 15.64 8.97994 15.29L10.9199 12.38H12.8299C14.4899 12.38 15.8299 11.04 15.8299 9.38001V3.51001C15.8099 1.85001 14.4699 0.51001 12.8099 0.51001Z" fill="#50555C"></path><path d="M4.86995 5.52002C4.35995 5.52002 3.94995 5.93002 3.94995 6.44002C3.94995 6.95002 4.35995 7.36002 4.86995 7.36002C5.37995 7.36002 5.78995 6.95002 5.78995 6.44002C5.78995 5.93002 5.37995 5.52002 4.86995 5.52002Z" fill="#50555C"></path><path d="M7.99983 5.52002C7.48983 5.52002 7.07983 5.93002 7.07983 6.44002C7.07983 6.95002 7.48983 7.36002 7.99983 7.36002C8.50983 7.36002 8.91983 6.95002 8.91983 6.44002C8.91983 5.93002 8.50983 5.52002 7.99983 5.52002Z" fill="#50555C"></path><path d="M11.12 5.52002C10.61 5.52002 10.2 5.93002 10.2 6.44002C10.2 6.95002 10.61 7.36002 11.12 7.36002C11.63 7.36002 12.04 6.95002 12.04 6.44002C12.04 5.93002 11.63 5.52002 11.12 5.52002Z" fill="#50555C"></path></svg><div data-role="L-thread" class="L-ImageTooltip__description">Write a memo</div></button><a href="https://getliner.com/my-highlights" target="_blank" class="L-ImageTooltip__home"><div class="L-ImageTooltip__home--img"></div><div class="L-ImageTooltip__home--redDot"></div><div data-role="L-home" class="L-ImageTooltip__description">Go to My Highlights</div></a></div><div class="L-ImageTooltip__divider"></div><div class="LImageHighlighter__ask LImageHighlighter__ask--highlighted"><span class="LImageHighlighter__askText">Ask AI</span></div></div></div></div><style type="text/css" class="L-V6">
-  .lytb-highlighter, .lytb-highlighter-optOutBox {
-    display: none !important;
-  }
+    <!-- Button container -->
+    <div id="button-container" class="button-container">
+      <!-- Buttons will be inserted here by JavaScript -->
+    </div>
 
-  .L-TimestampToLeft {
-    left: 0 !important;
-  }
-</style><div class="liner-scroll-points-container"></div></body>
+    <!-- Status message container -->
+    <div id="status-message" class="status-message" style="display: none;"></div>
 
+  </div>
+
+</div>
+
+<!-- Navigation Bar -->
+<div class="nav-bar">
+  <div class="nav-icons">
+    <a href="home.html"><img src="images/navicons/homeicon.png" alt="Home" /></a>
+    <a href="upload_og.html"><img src="images/navicons/uploadicon.png" alt="Upload" /></a>
+    <a href="profile.html"><img src="images/navicons/profileicon.png" alt="Profile" /></a>
+    <a href="setting.html"><img src="images/navicons/settingiconact.png" alt="Settings" /></a>
+  </div>
+</div>
+
+</body>
 </html>

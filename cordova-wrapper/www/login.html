@@ -1,30 +1,28 @@
-<html><head><style data-emotion="css" data-s=""></style><style data-emotion="css" data-s=""></style>
+<!DOCTYPE html>
+<html>
+<head>
   <meta charset="utf-8">
-  <title>Home</title>
+  <title>Login</title>
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: 'unsafe-eval'; connect-src 'self' https://firebasestorage.googleapis.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com; img-src 'self' data: https://firebasestorage.googleapis.com https://www.google.com; script-src 'self' https://www.gstatic.com https://apis.google.com; style-src 'self' 'unsafe-inline'; media-src *">  <link integrity="" rel="stylesheet" href="assets/my-frontend-app-d41d8cd98f00b204e9800998ecf8427e.css">
-  <script src="https://apis.google.com/_/scs/abc-static/_/js/k=gapi.lb.en.JisoxTPHVRs.O/m=gapi_iframes/rt=j/sv=1/d=1/ed=1/am=AAAC/rs=AHpOoo9VOmUKkb8FAwL65OiDUU4etqWcRg/cb=gapi.loaded_0?le=scs" async=""></script><script type="module" src="js/login.js"></script>
 
-  <style data-styled="active" data-styled-version="5.3.8">
-    a:link {
-      text-decoration: none;
-    }
-    a:visited {
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: none;
-    }
-    a:active {
-      text-decoration: none;
-    }
+  <!-- CSP Policy for iOS simulator with gapi -->
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src * 'unsafe-inline' 'unsafe-eval' data: gap:;
+    script-src * 'unsafe-inline' 'unsafe-eval' blob:;
+    connect-src * 'unsafe-inline';
+    img-src * data: blob: 'unsafe-inline';
+    frame-src *;
+    style-src * 'unsafe-inline';
+  ">
+
+  <!-- Fonts -->
+  <style>
     @font-face {
       font-family: 'Inter';
       font-weight: 600;
       src: url('fonts/Inter/Inter-SemiBold.ttf') format('truetype');
     }
-
     @font-face {
       font-family: 'Inter';
       font-weight: 400;
@@ -35,27 +33,37 @@
       font-weight: 500;
       src: url('fonts/Inter/Inter-Regular.ttf') format('truetype');
     }
-    a:link {
+    a:link, a:visited, a:hover, a:active {
       text-decoration: none;
     }
-    a:visited {
-      text-decoration: none;
+    body {
+      margin: 0;
+      padding: 0;
+      background: white;
+      font-family: 'Inter', sans-serif;
     }
-    a:hover {
-      text-decoration: none;
-    }
-    a:active {
-      text-decoration: none;
-    }
-  </style><style data-styled="active" data-styled-version="5.3.8"></style>
-  <script src="https://apis.google.com/js/api.js?onload=__iframefcb833178" type="text/javascript" charset="UTF-8" gapi_processed="true"></script></head>
+  </style>
 
+  <!-- Load Firebase COMPAT version (v8) - Works with gapi -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
 
-<body class="ember-application" data-new-gr-c-s-check-loaded="14.1174.0" data-gr-ext-installed="" data-liner-extension-version="7.14.28">
+  <!-- Load gapi scripts -->
+  <script src="https://apis.google.com/js/platform.js"></script>
+  <script src="https://accounts.google.com/gsi/client"></script>
 
+  <!-- Load your login.js -->
+  <script src="js/login.js"></script>
+
+</head>
+
+<body class="ember-application">
+<!-- Main container with exact styling from your example -->
 <div style="width: 100%; height: 100%; background: white; flex-direction: column; justify-content: center; align-items: center; display: inline-flex">
   <div style="width: 375px; height: 812.50px; position: relative">
-    <div style="width: 100%; height: 36px; left:; top: 25px; position: absolute">
+
+    <!-- Header with Login title and Sign up link -->
+    <div style="width: 100%; height: 36px; left: 0; top: 25px; position: absolute">
       <div style="left: 0; top: 0px; position: relative; text-align: center; color: black; font-size: 30px; font-family: Inter; font-weight: 600; word-wrap: break-word">
         Login
       </div>
@@ -63,56 +71,47 @@
         <div style="left: 20px; top: 8px; position: absolute; color: #62931B; font-size: 16px; font-family: Inter; font-weight: 500; word-wrap: break-word">Sign up</div>
       </a>
     </div>
-  </div>
 
-
-    <div style="width: 343px; height: 50px; top: 128px; position: absolute">
+    <!-- Email input field -->
+    <div style="width: 343px; height: 50px; left: 16px; top: 128px; position: absolute">
       <div style="width: 343px; height: 50px; top: 0px; position: absolute; background: #F6F6F6; border-radius: 8px; border: 1px #E8E8E8 solid"></div>
-      <input placeholder="Email" id="email" type="text" style="left: 16px; top: 16px; position: absolute; color: #000000; font-size: 16px; font-family: Inter; font-weight: 500; word-wrap: break-word; border: none; background: transparent; outline: none; padding: 0;">
+      <input placeholder="Email" id="email" type="text" style="width: 300px; left: 16px; top: 16px; position: absolute; color: #000000; font-size: 16px; font-family: Inter; font-weight: 500; word-wrap: break-word; border: none; background: transparent; outline: none; padding: 0;">
     </div>
 
-    <div style="width: 343px; height: 50px; top: 194px; position: absolute">
+    <!-- Password input field -->
+    <div style="width: 343px; height: 50px; left: 16px; top: 194px; position: absolute">
       <div style="width: 343px; height: 50px; top: 0px; position: absolute; background: #F6F6F6; border-radius: 8px; border: 1px #E8E8E8 solid"></div>
-      <input placeholder="Password" id="password" type="password" style="left: 16px; top: 16px; position: absolute; color: #000000; font-size: 16px; font-family: Inter; font-weight: 500; word-wrap: break-word; border: none; background: transparent; outline: none; padding: 0;">
+      <input placeholder="Password" id="password" type="password" style="width: 300px; left: 16px; top: 16px; position: absolute; color: #000000; font-size: 16px; font-family: Inter; font-weight: 500; word-wrap: break-word; border: none; background: transparent; outline: none; padding: 0;">
     </div>
 
-    <div style="height: 22px; padding-left: 120px; padding-right: 120px; padding-top: 16px; padding-bottom: 16px; top: 270px; position: absolute; background: #62931B; border-radius: 100px; display: inline-flex; justify-content: center; align-items: center;">
-      <a id="login" style="text-align: center; color: white; font-size: 16px; font-family: 'Inter'; font-weight: 700; text-decoration: none;">Begin Sharing!</a>
-    </div>
-    <a href="changePassword_login.html" style="top: 345px;position: absolute;color: #62931B;font-size: 16px;font-family: Inter;font-weight: 700;word-wrap: break-word;text-align: center">Forgot password</a>
+    <!-- Login button -->
+    <button id="login" style="width: 343px; height: 50px; left: 16px; top: 270px; position: absolute; background: #62931B; border-radius: 100px; border: none; display: flex; justify-content: center; align-items: center; cursor: pointer;">
+      <div style="text-align: center; color: white; font-size: 16px; font-family: 'Inter'; font-weight: 700;">Begin Sharing!</div>
+    </button>
+
+    <!-- Forgot password link -->
+    <a href="changePassword_login.html" style="left: 16px; top: 345px; position: absolute; color: #62931B; font-size: 16px; font-family: Inter; font-weight: 700; word-wrap: break-word">Forgot password</a>
+
   </div>
 </div>
 
+<!-- Debug script for testing -->
+<script>
+  // Debug info
+  window.addEventListener('load', function() {
+    console.log('Login page loaded');
+    console.log('Firebase available:', typeof firebase !== 'undefined');
+    console.log('gapi available:', typeof gapi !== 'undefined');
 
+    // Check if elements exist
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const loginButton = document.getElementById('login');
 
-<div class="liner-scroll-points-container"></div><div class="LImageHighlighter" data-image-id="null" style="display: none;"><div class="LImageHighlighter__btn LImageHighlighter__btn--static LImageHighlighter__btn--v6"><div class="LImageHighlighter__gradient"></div><div class="LImageHighlighter__highlight LImageHighlighter__highlight--v6"><div class="LImageHighlighter__tooltip">Highlight an image</div><div class="LImageHighlighter__iconBox LImageHighlighter__iconBox--v6"><div class="LImageHighlighter__icon"></div><div class="LImageHighlighter__color"></div></div><span class="LImageHighlighter__text LImageHighlighter__text--v6">Highlight</span></div><div class="LImageHighlighter__ask"><span class="LImageHighlighter__askText">Ask AI</span></div><div class="LImageHighlighter__optOutBox LImageHighlighter__optOutBox--v6"><div class="LImageHighlighter__tooltip">Turn off</div><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10.0044 10C9.79313 10 9.61458 9.92812 9.46875 9.78438C9.32292 9.64062 9.25 9.4625 9.25 9.25V2.75C9.25 2.5375 9.32145 2.35937 9.46435 2.21562C9.60727 2.07187 9.78435 2 9.9956 2C10.2069 2 10.3854 2.07187 10.5312 2.21562C10.6771 2.35937 10.75 2.5375 10.75 2.75V9.25C10.75 9.4625 10.6785 9.64062 10.5356 9.78438C10.3927 9.92812 10.2156 10 10.0044 10ZM10 17C9.02778 17 8.11713 16.8153 7.26806 16.4458C6.41898 16.0764 5.68009 15.5773 5.0514 14.9486C4.42269 14.3199 3.92361 13.581 3.55417 12.7319C3.18472 11.8829 3 10.9722 3 10C3 9.18647 3.13889 8.39629 3.41667 7.62944C3.69444 6.86259 4.09028 6.16667 4.60417 5.54167C4.74306 5.36111 4.91667 5.26042 5.125 5.23958C5.33333 5.21875 5.51389 5.28472 5.66667 5.4375C5.80556 5.59028 5.88194 5.76736 5.89583 5.96875C5.90972 6.17014 5.86111 6.34722 5.75 6.5C5.3409 7 5.0303 7.54861 4.81819 8.14583C4.60606 8.74306 4.5 9.36111 4.5 10C4.5 11.5321 5.03318 12.8318 6.09954 13.8991C7.16592 14.9664 8.46453 15.5 9.99538 15.5C11.5262 15.5 12.8264 14.9664 13.8958 13.8991C14.9653 12.8318 15.5 11.5321 15.5 10C15.5 9.34722 15.3889 8.72569 15.1667 8.13542C14.9444 7.54514 14.6319 6.99306 14.2292 6.47917C14.1042 6.32639 14.0486 6.14931 14.0625 5.94792C14.0764 5.74653 14.1597 5.56944 14.3125 5.41667C14.4514 5.26389 14.625 5.20139 14.8333 5.22917C15.0417 5.25694 15.2207 5.35667 15.3704 5.52835C15.9013 6.16223 16.3056 6.86111 16.5833 7.625C16.8611 8.38889 17 9.18056 17 10C17 10.9722 16.8153 11.8829 16.4458 12.7319C16.0764 13.581 15.5773 14.3199 14.9486 14.9486C14.3199 15.5773 13.581 16.0764 12.7319 16.4458C11.8829 16.8153 10.9722 17 10 17Z" fill="#9AA7B3"></path></svg></div></div><div class="L-ImageTooltip"><div class="L-ImageTooltip__main"><div class="L-ImageTooltip__gradient"></div><div class="L-ImageTooltip__wrapper"><button class="L-ImageTooltip__delete"><svg width="18" height="17" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16.3499 3.86991H12.3599C12.1299 2.19991 10.7099 0.909912 8.98989 0.909912C7.26989 0.909912 5.84989 2.20991 5.61989 3.86991H1.63989C1.22989 3.86991 0.889893 4.20991 0.889893 4.61991C0.889893 5.02991 1.22989 5.36991 1.63989 5.36991H2.23989V14.6899C2.23989 15.9399 3.24989 16.9499 4.50989 16.9499H13.5099C14.7599 16.9499 15.7799 15.9399 15.7799 14.6899V5.36991H16.3699C16.7799 5.36991 17.1199 5.02991 17.1199 4.61991C17.1199 4.20991 16.7699 3.86991 16.3499 3.86991ZM14.2599 14.6899C14.2599 15.1099 13.9199 15.4499 13.4899 15.4499H4.48989C4.06989 15.4499 3.71989 15.1099 3.71989 14.6899V5.40991H14.2499V14.6899H14.2599ZM8.98989 2.41991C9.88989 2.41991 10.6399 3.03991 10.8499 3.87991H7.12989C7.33989 3.03991 8.08989 2.41991 8.98989 2.41991Z" fill="#50555C"></path><path d="M5.59985 14.2898C6.00985 14.2898 6.34985 13.9498 6.34985 13.5398V7.32983C6.34985 6.91983 6.00985 6.57983 5.59985 6.57983C5.18985 6.57983 4.84985 6.91983 4.84985 7.32983V13.5398C4.84985 13.9498 5.18985 14.2898 5.59985 14.2898Z" fill="#50555C"></path><path d="M8.98999 14.2898C9.39999 14.2898 9.73999 13.9498 9.73999 13.5398V7.32983C9.73999 6.91983 9.39999 6.57983 8.98999 6.57983C8.57999 6.57983 8.23999 6.91983 8.23999 7.32983V13.5398C8.23999 13.9498 8.57999 14.2898 8.98999 14.2898Z" fill="#50555C"></path><path d="M12.3999 14.2898C12.8099 14.2898 13.1499 13.9498 13.1499 13.5398V7.32983C13.1499 6.91983 12.8099 6.57983 12.3999 6.57983C11.9899 6.57983 11.6499 6.91983 11.6499 7.32983V13.5398C11.6499 13.9498 11.9799 14.2898 12.3999 14.2898Z" fill="#50555C"></path></svg><div data-role="L-delete" class="L-ImageTooltip__description">Delete</div></button><div class="L-ImageTooltip__color"><button class="L-ImageTooltip__colorBtn"><div class="L-ImageTooltip__colorParts"><div class="L-ImageTooltip__colorPartItem L-First"></div></div><div class="L-ImageTooltip__colorArrow"></div></button><div class="L-ImageTooltip__colorDropdown L-Hidden"><button class="L-ImageTooltip__colorSelect" data-slot-id="0"><div class="L-ImageTooltip__colorSelectIcon L-Yellow"></div><div class="L-ImageTooltip__colorSelectText L-Yellow">Important</div></button><button class="L-ImageTooltip__colorSelect" data-slot-id="1"><div class="L-ImageTooltip__colorSelectIcon L-Mint"></div><div class="L-ImageTooltip__colorSelectText L-Mint">Important</div></button><button class="L-ImageTooltip__colorSelect" data-slot-id="2"><div class="L-ImageTooltip__colorSelectIcon L-Orange"></div><div class="L-ImageTooltip__colorSelectText L-Orange">Important</div></button><button class="L-ImageTooltip__colorSelect" data-slot-id="3"><div class="L-ImageTooltip__colorSelectIcon L-Purple"></div><div class="L-ImageTooltip__colorSelectText L-Purple">Important</div></button><button class="L-ImageTooltip__colorSelect" data-slot-id="4"><div class="L-ImageTooltip__colorSelectIcon L-Blue"></div><div class="L-ImageTooltip__colorSelectText L-Blue">Important</div></button><button class="L-ImageTooltip__colorSelect" data-slot-id="5"><div class="L-ImageTooltip__colorSelectIcon L-Pink"></div><div class="L-ImageTooltip__colorSelectText L-Pink">Important</div></button></div><div data-role="L-color" class="L-ImageTooltip__description">Change a color</div></div><button class="L-ImageTooltip__thread"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.8099 2.01001C13.6399 2.01001 14.3099 2.68001 14.3099 3.51001V9.38001C14.3099 10.21 13.6399 10.88 12.8099 10.88H10.8999C10.3999 10.88 9.92994 11.13 9.64994 11.55L7.99994 14.04L6.34994 11.56C6.06994 11.14 5.59994 10.89 5.09994 10.89H3.18994C2.35994 10.89 1.68994 10.22 1.68994 9.39001V3.51001C1.68994 2.68001 2.35994 2.01001 3.18994 2.01001H12.8099ZM12.8099 0.51001H3.18994C1.52994 0.51001 0.189941 1.85001 0.189941 3.51001V9.38001C0.189941 11.04 1.52994 12.38 3.18994 12.38H5.09994L7.03994 15.29C7.26994 15.63 7.63994 15.81 8.00994 15.81C8.37994 15.81 8.74994 15.64 8.97994 15.29L10.9199 12.38H12.8299C14.4899 12.38 15.8299 11.04 15.8299 9.38001V3.51001C15.8099 1.85001 14.4699 0.51001 12.8099 0.51001Z" fill="#50555C"></path><path d="M4.86995 5.52002C4.35995 5.52002 3.94995 5.93002 3.94995 6.44002C3.94995 6.95002 4.35995 7.36002 4.86995 7.36002C5.37995 7.36002 5.78995 6.95002 5.78995 6.44002C5.78995 5.93002 5.37995 5.52002 4.86995 5.52002Z" fill="#50555C"></path><path d="M7.99983 5.52002C7.48983 5.52002 7.07983 5.93002 7.07983 6.44002C7.07983 6.95002 7.48983 7.36002 7.99983 7.36002C8.50983 7.36002 8.91983 6.95002 8.91983 6.44002C8.91983 5.93002 8.50983 5.52002 7.99983 5.52002Z" fill="#50555C"></path><path d="M11.12 5.52002C10.61 5.52002 10.2 5.93002 10.2 6.44002C10.2 6.95002 10.61 7.36002 11.12 7.36002C11.63 7.36002 12.04 6.95002 12.04 6.44002C12.04 5.93002 11.63 5.52002 11.12 5.52002Z" fill="#50555C"></path></svg><div data-role="L-thread" class="L-ImageTooltip__description">Write a memo</div></button><a href="https://getliner.com/my-highlights" target="_blank" class="L-ImageTooltip__home"><div class="L-ImageTooltip__home--img"></div><div class="L-ImageTooltip__home--redDot"></div><div data-role="L-home" class="L-ImageTooltip__description">Go to My Highlights</div></a></div><div class="L-ImageTooltip__divider"></div><div class="LImageHighlighter__ask LImageHighlighter__ask--highlighted"><span class="LImageHighlighter__askText">Ask AI</span></div></div></div></div><style type="text/css" class="L-V6">
-  .lytb-highlighter, .lytb-highlighter-optOutBox {
-    display: none !important;
-  }
-
-  .L-TimestampToLeft {
-    left: 0 !important;
-  }
-</style><style type="text/css" class="L-V6">
-  .lytb-highlighter, .lytb-highlighter-optOutBox {
-    display: none !important;
-  }
-
-  .L-TimestampToLeft {
-    left: 0 !important;
-  }
-</style>
-
-<div class="LImageHighlighter" data-image-id="null" style="display: none;"><div class="LImageHighlighter__btn LImageHighlighter__btn--static LImageHighlighter__btn--v6"><div class="LImageHighlighter__gradient"></div><div class="LImageHighlighter__highlight LImageHighlighter__highlight--v6"><div class="LImageHighlighter__tooltip">Highlight an image</div><div class="LImageHighlighter__iconBox LImageHighlighter__iconBox--v6"><div class="LImageHighlighter__icon"></div><div class="LImageHighlighter__color"></div></div><span class="LImageHighlighter__text LImageHighlighter__text--v6">Highlight</span></div><div class="LImageHighlighter__ask"><span class="LImageHighlighter__askText">Ask AI</span></div><div class="LImageHighlighter__optOutBox LImageHighlighter__optOutBox--v6"><div class="LImageHighlighter__tooltip">Turn off</div><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10.0044 10C9.79313 10 9.61458 9.92812 9.46875 9.78438C9.32292 9.64062 9.25 9.4625 9.25 9.25V2.75C9.25 2.5375 9.32145 2.35937 9.46435 2.21562C9.60727 2.07187 9.78435 2 9.9956 2C10.2069 2 10.3854 2.07187 10.5312 2.21562C10.6771 2.35937 10.75 2.5375 10.75 2.75V9.25C10.75 9.4625 10.6785 9.64062 10.5356 9.78438C10.3927 9.92812 10.2156 10 10.0044 10ZM10 17C9.02778 17 8.11713 16.8153 7.26806 16.4458C6.41898 16.0764 5.68009 15.5773 5.0514 14.9486C4.42269 14.3199 3.92361 13.581 3.55417 12.7319C3.18472 11.8829 3 10.9722 3 10C3 9.18647 3.13889 8.39629 3.41667 7.62944C3.69444 6.86259 4.09028 6.16667 4.60417 5.54167C4.74306 5.36111 4.91667 5.26042 5.125 5.23958C5.33333 5.21875 5.51389 5.28472 5.66667 5.4375C5.80556 5.59028 5.88194 5.76736 5.89583 5.96875C5.90972 6.17014 5.86111 6.34722 5.75 6.5C5.3409 7 5.0303 7.54861 4.81819 8.14583C4.60606 8.74306 4.5 9.36111 4.5 10C4.5 11.5321 5.03318 12.8318 6.09954 13.8991C7.16592 14.9664 8.46453 15.5 9.99538 15.5C11.5262 15.5 12.8264 14.9664 13.8958 13.8991C14.9653 12.8318 15.5 11.5321 15.5 10C15.5 9.34722 15.3889 8.72569 15.1667 8.13542C14.9444 7.54514 14.6319 6.99306 14.2292 6.47917C14.1042 6.32639 14.0486 6.14931 14.0625 5.94792C14.0764 5.74653 14.1597 5.56944 14.3125 5.41667C14.4514 5.26389 14.625 5.20139 14.8333 5.22917C15.0417 5.25694 15.2207 5.35667 15.3704 5.52835C15.9013 6.16223 16.3056 6.86111 16.5833 7.625C16.8611 8.38889 17 9.18056 17 10C17 10.9722 16.8153 11.8829 16.4458 12.7319C16.0764 13.581 15.5773 14.3199 14.9486 14.9486C14.3199 15.5773 13.581 16.0764 12.7319 16.4458C11.8829 16.8153 10.9722 17 10 17Z" fill="#9AA7B3"></path></svg></div></div><div class="L-ImageTooltip"><div class="L-ImageTooltip__main"><div class="L-ImageTooltip__gradient"></div><div class="L-ImageTooltip__wrapper"><button class="L-ImageTooltip__delete"><svg width="18" height="17" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16.3499 3.86991H12.3599C12.1299 2.19991 10.7099 0.909912 8.98989 0.909912C7.26989 0.909912 5.84989 2.20991 5.61989 3.86991H1.63989C1.22989 3.86991 0.889893 4.20991 0.889893 4.61991C0.889893 5.02991 1.22989 5.36991 1.63989 5.36991H2.23989V14.6899C2.23989 15.9399 3.24989 16.9499 4.50989 16.9499H13.5099C14.7599 16.9499 15.7799 15.9399 15.7799 14.6899V5.36991H16.3699C16.7799 5.36991 17.1199 5.02991 17.1199 4.61991C17.1199 4.20991 16.7699 3.86991 16.3499 3.86991ZM14.2599 14.6899C14.2599 15.1099 13.9199 15.4499 13.4899 15.4499H4.48989C4.06989 15.4499 3.71989 15.1099 3.71989 14.6899V5.40991H14.2499V14.6899H14.2599ZM8.98989 2.41991C9.88989 2.41991 10.6399 3.03991 10.8499 3.87991H7.12989C7.33989 3.03991 8.08989 2.41991 8.98989 2.41991Z" fill="#50555C"></path><path d="M5.59985 14.2898C6.00985 14.2898 6.34985 13.9498 6.34985 13.5398V7.32983C6.34985 6.91983 6.00985 6.57983 5.59985 6.57983C5.18985 6.57983 4.84985 6.91983 4.84985 7.32983V13.5398C4.84985 13.9498 5.18985 14.2898 5.59985 14.2898Z" fill="#50555C"></path><path d="M8.98999 14.2898C9.39999 14.2898 9.73999 13.9498 9.73999 13.5398V7.32983C9.73999 6.91983 9.39999 6.57983 8.98999 6.57983C8.57999 6.57983 8.23999 6.91983 8.23999 7.32983V13.5398C8.23999 13.9498 8.57999 14.2898 8.98999 14.2898Z" fill="#50555C"></path><path d="M12.3999 14.2898C12.8099 14.2898 13.1499 13.9498 13.1499 13.5398V7.32983C13.1499 6.91983 12.8099 6.57983 12.3999 6.57983C11.9899 6.57983 11.6499 6.91983 11.6499 7.32983V13.5398C11.6499 13.9498 11.9799 14.2898 12.3999 14.2898Z" fill="#50555C"></path></svg><div data-role="L-delete" class="L-ImageTooltip__description">Delete</div></button><div class="L-ImageTooltip__color"><button class="L-ImageTooltip__colorBtn"><div class="L-ImageTooltip__colorParts"><div class="L-ImageTooltip__colorPartItem L-First"></div></div><div class="L-ImageTooltip__colorArrow"></div></button><div class="L-ImageTooltip__colorDropdown L-Hidden"><button class="L-ImageTooltip__colorSelect" data-slot-id="0"><div class="L-ImageTooltip__colorSelectIcon L-Yellow"></div><div class="L-ImageTooltip__colorSelectText L-Yellow">Important</div></button><button class="L-ImageTooltip__colorSelect" data-slot-id="1"><div class="L-ImageTooltip__colorSelectIcon L-Mint"></div><div class="L-ImageTooltip__colorSelectText L-Mint">Important</div></button><button class="L-ImageTooltip__colorSelect" data-slot-id="2"><div class="L-ImageTooltip__colorSelectIcon L-Orange"></div><div class="L-ImageTooltip__colorSelectText L-Orange">Important</div></button><button class="L-ImageTooltip__colorSelect" data-slot-id="3"><div class="L-ImageTooltip__colorSelectIcon L-Purple"></div><div class="L-ImageTooltip__colorSelectText L-Purple">Important</div></button><button class="L-ImageTooltip__colorSelect" data-slot-id="4"><div class="L-ImageTooltip__colorSelectIcon L-Blue"></div><div class="L-ImageTooltip__colorSelectText L-Blue">Important</div></button><button class="L-ImageTooltip__colorSelect" data-slot-id="5"><div class="L-ImageTooltip__colorSelectIcon L-Pink"></div><div class="L-ImageTooltip__colorSelectText L-Pink">Important</div></button></div><div data-role="L-color" class="L-ImageTooltip__description">Change a color</div></div><button class="L-ImageTooltip__thread"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12.8099 2.01001C13.6399 2.01001 14.3099 2.68001 14.3099 3.51001V9.38001C14.3099 10.21 13.6399 10.88 12.8099 10.88H10.8999C10.3999 10.88 9.92994 11.13 9.64994 11.55L7.99994 14.04L6.34994 11.56C6.06994 11.14 5.59994 10.89 5.09994 10.89H3.18994C2.35994 10.89 1.68994 10.22 1.68994 9.39001V3.51001C1.68994 2.68001 2.35994 2.01001 3.18994 2.01001H12.8099ZM12.8099 0.51001H3.18994C1.52994 0.51001 0.189941 1.85001 0.189941 3.51001V9.38001C0.189941 11.04 1.52994 12.38 3.18994 12.38H5.09994L7.03994 15.29C7.26994 15.63 7.63994 15.81 8.00994 15.81C8.37994 15.81 8.74994 15.64 8.97994 15.29L10.9199 12.38H12.8299C14.4899 12.38 15.8299 11.04 15.8299 9.38001V3.51001C15.8099 1.85001 14.4699 0.51001 12.8099 0.51001Z" fill="#50555C"></path><path d="M4.86995 5.52002C4.35995 5.52002 3.94995 5.93002 3.94995 6.44002C3.94995 6.95002 4.35995 7.36002 4.86995 7.36002C5.37995 7.36002 5.78995 6.95002 5.78995 6.44002C5.78995 5.93002 5.37995 5.52002 4.86995 5.52002Z" fill="#50555C"></path><path d="M7.99983 5.52002C7.48983 5.52002 7.07983 5.93002 7.07983 6.44002C7.07983 6.95002 7.48983 7.36002 7.99983 7.36002C8.50983 7.36002 8.91983 6.95002 8.91983 6.44002C8.91983 5.93002 8.50983 5.52002 7.99983 5.52002Z" fill="#50555C"></path><path d="M11.12 5.52002C10.61 5.52002 10.2 5.93002 10.2 6.44002C10.2 6.95002 10.61 7.36002 11.12 7.36002C11.63 7.36002 12.04 6.95002 12.04 6.44002C12.04 5.93002 11.63 5.52002 11.12 5.52002Z" fill="#50555C"></path></svg><div data-role="L-thread" class="L-ImageTooltip__description">Write a memo</div></button><a href="https://getliner.com/my-highlights" target="_blank" class="L-ImageTooltip__home"><div class="L-ImageTooltip__home--img"></div><div class="L-ImageTooltip__home--redDot"></div><div data-role="L-home" class="L-ImageTooltip__description">Go to My Highlights</div></a></div><div class="L-ImageTooltip__divider"></div><div class="LImageHighlighter__ask LImageHighlighter__ask--highlighted"><span class="LImageHighlighter__askText">Ask AI</span></div></div></div></div><style type="text/css" class="L-V6">
-  .lytb-highlighter, .lytb-highlighter-optOutBox {
-    display: none !important;
-  }
-
-  .L-TimestampToLeft {
-    left: 0 !important;
-  }
-</style>
-
-
-<div></div><div id="compose-ai-general-snackbar-root"></div><div id="Chat-Plugin-Root" class="compose-root-component"></div><iframe ng-non-bindable="" frameborder="0" hspace="0" marginheight="0" marginwidth="0" scrolling="no" tabindex="0" vspace="0" width="100%" id="I0_1716172872903" name="I0_1716172872903" src="https://shareable-37f85.firebaseapp.com/__/auth/iframe?apiKey=AIzaSyBk19z0f3n7ixniq-f7Bq1Zj4NYIXAZ7oI&amp;appName=%5BDEFAULT%5D&amp;v=9.1.1&amp;eid=p&amp;usegapi=1&amp;jsh=m%3B%2F_%2Fscs%2Fabc-static%2F_%2Fjs%2Fk%3Dgapi.lb.en.JisoxTPHVRs.O%2Fam%3DAAAC%2Fd%3D1%2Frs%3DAHpOoo9VOmUKkb8FAwL65OiDUU4etqWcRg%2Fm%3D__features__#id=I0_1716172872903&amp;_gfid=I0_1716172872903&amp;parent=http%3A%2F%2Flocalhost%3A8000&amp;pfname=&amp;rpctoken=14841961" style="position: absolute; top: -100px; width: 1px; height: 1px;"></iframe><grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration>
-<iframe ng-non-bindable="" frameborder="0" hspace="0" marginheight="0" marginwidth="0" scrolling="no" tabindex="0" vspace="0" width="100%" id="I0_1716799853468" name="I0_1716799853468" src="https://shareable-37f85.firebaseapp.com/__/auth/iframe?apiKey=AIzaSyBk19z0f3n7ixniq-f7Bq1Zj4NYIXAZ7oI&amp;appName=%5BDEFAULT%5D&amp;v=9.1.1&amp;eid=p&amp;usegapi=1&amp;jsh=m%3B%2F_%2Fscs%2Fabc-static%2F_%2Fjs%2Fk%3Dgapi.lb.en.JisoxTPHVRs.O%2Fam%3DAAAC%2Fd%3D1%2Frs%3DAHpOoo9VOmUKkb8FAwL65OiDUU4etqWcRg%2Fm%3D__features__#id=I0_1716799853468&amp;_gfid=I0_1716799853468&amp;parent=http%3A%2F%2Flocalhost%3A8000&amp;pfname=&amp;rpctoken=22094276" style="position: absolute; top: -100px; width: 1px; height: 1px;"></iframe></body>
+    console.log('Email input found:', !!emailInput);
+    console.log('Password input found:', !!passwordInput);
+    console.log('Login button found:', !!loginButton);
+  });
+</script>
+</body>
+</html>

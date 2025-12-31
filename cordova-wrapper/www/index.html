@@ -1,163 +1,145 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>MyFrontendApp</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MyApp - Loading</title>
 
-    <meta name="my-frontend-app/config/environment" content="%7B%22modulePrefix%22%3A%22my-frontend-app%22%2C%22environment%22%3A%22production%22%2C%22rootURL%22%3A%22%2F%22%2C%22locationType%22%3A%22history%22%2C%22EmberENV%22%3A%7B%22EXTEND_PROTOTYPES%22%3Afalse%2C%22FEATURES%22%3A%7B%7D%2C%22_APPLICATION_TEMPLATE_WRAPPER%22%3Afalse%2C%22_DEFAULT_ASYNC_OBSERVERS%22%3Atrue%2C%22_JQUERY_INTEGRATION%22%3Afalse%2C%22_NO_IMPLICIT_ROUTE_MODEL%22%3Atrue%2C%22_TEMPLATE_ONLY_GLIMMER_COMPONENTS%22%3Atrue%7D%2C%22APP%22%3A%7B%22name%22%3A%22my-frontend-app%22%2C%22version%22%3A%220.0.0%2Be215b3da%22%7D%7D" />
+  <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.1.1/firebase-auth-compat.js"></script>
 
-    <link integrity="" rel="stylesheet" href="/assets/vendor-d41d8cd98f00b204e9800998ecf8427e.css">
-    <link integrity="" rel="stylesheet" href="/assets/my-frontend-app-d41d8cd98f00b204e9800998ecf8427e.css">
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src * gap: ionic: file: data: 'unsafe-inline' 'unsafe-eval';
+               script-src * 'unsafe-inline' 'unsafe-eval' blob:;
+               style-src * 'unsafe-inline';
+               connect-src *;
+               frame-src *;
+               font-src * data:;
+               img-src * data: blob:;">
+  <style>
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        text-align: center;
+    }
 
+    .container {
+        padding: 40px;
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        backdrop-filter: blur(10px);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
 
-  </head>
-  <body>
-    <h1>hi!</h1>
+    h1 {
+        margin: 0 0 20px 0;
+        font-size: 28px;
+    }
 
-    <script src="/assets/vendor-05dded43874dba58d38099b060e86bad.js" integrity="sha256-CqmIWWctKPDVjsfEfHFdiBE24Aq8UrbF0I34tAE09Os= sha512-hml7/T2D17YkjA8xzuHVfVXyikDtHJ7TufZAzwABw8yRoShkfnTRd6cgyB8eBFOE+4jKdMDwpvSdEWHyxDLuVQ==" ></script>
-    <script src="/assets/chunk.524.5d15f4e73da88566d0d2.js" integrity="sha256-g30tIVfkYnZxTU/mmJWZrC6AX08FRWN6I4yb8m2XJ1Q= sha512-g/5L6XJfSHPl6aqgIwOlRnnQzdxMvAxcm+UIPjwHCFfxbuGLjRg/KJzhujVKLnGPOzQUT6rzZjYxGFBfjhTCZw==" ></script>
-    <script src="/assets/my-frontend-app-8b506230d7a256c9697a1f700836c878.js" integrity="sha256-N7hg4zjNBG9G4UGmybXuB5fWBH0baraAJUpTJB/RZI0= sha512-2hQRhwyAC7PRvGFqlJEEiQhFgcZM63LC4JbnVnou9+QL14VgTPaP0UW7EXMwlYiKmGkzpCbjuuWf8fhnC79yrQ==" ></script>
+    .loading {
+        margin: 20px 0;
+        font-size: 16px;
+        opacity: 0.8;
+    }
 
+    .manual-link {
+        display: inline-block;
+        margin-top: 20px;
+        padding: 12px 24px;
+        background: white;
+        color: #667eea;
+        text-decoration: none;
+        border-radius: 50px;
+        font-weight: bold;
+        transition: transform 0.2s;
+    }
 
+    .manual-link:hover {
+        transform: translateY(-2px);
+    }
 
-    <!--- main page --->
-    <div style="width: 100%; height: 100%; position: relative; background: white">
-      <div style="width: 375px; height: 44px; left: 0px; top: 0px; position: absolute">
-        <div style="width: 219px; height: 30px; left: 78px; top: -2px; position: absolute; background: black"></div>
-        <div style="width: 66.66px; height: 11.34px; left: 293.67px; top: 17.33px; position: absolute">
-          <div style="width: 24.33px; height: 11.33px; left: 42.33px; top: 0px; position: absolute">
-            <div style="width: 22px; height: 11.33px; left: 0px; top: 0px; position: absolute; opacity: 0.35; border-radius: 2.67px; border: 1px black solid"></div>
-            <div style="width: 1.33px; height: 4px; left: 23px; top: 3.67px; position: absolute; opacity: 0.40; background: black"></div>
-            <div style="width: 18px; height: 7.33px; left: 2px; top: 2px; position: absolute; background: black; border-radius: 1.33px"></div>
-          </div>
-          <img style="width: 15.27px; height: 10.97px; left: 22.03px; top: 0px; position: absolute" src="https://via.placeholder.com/15x11" />
-          <img style="width: 17px; height: 10.67px; left: 0px; top: 0.34px; position: absolute" src="https://via.placeholder.com/17x11" />
-        </div>
-        <div style="width: 28.43px; height: 11.09px; left: 33.45px; top: 17.17px; position: absolute; background: black"></div>
-      </div>
-      <div style="width: 343px; height: 36px; padding-left: 98px; padding-right: 94px; left: 16px; top: 60px; position: absolute; justify-content: flex-end; align-items: center; display: inline-flex">
-        <div style="text-align: center; color: black; font-size: 30px; font-family: Inter; font-weight: 600; word-wrap: break-word">ShareAble</div>
-      </div>
-      <div style="width: 343px; height: 50px; left: 16px; top: 128px; position: absolute">
-        <div style="width: 343px; height: 50px; left: 0px; top: 0px; position: absolute; background: #F6F6F6; border-radius: 100px; border: 1px #E8E8E8 solid"></div>
-        <div style="left: 16px; top: 16px; position: absolute; color: #BDBDBD; font-size: 16px; font-family: Inter; font-weight: 500; word-wrap: break-word">Search</div>
-      </div>
-      <div style="width: 362px; height: 222px; left: 16px; top: 210px; position: absolute">
-        <div style="width: 110px; height: 177px; padding-bottom: 25px; left: 0px; top: 45px; position: absolute; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 8px; display: inline-flex">
-          <div style="width: 110px; height: 110px; background: #F6F6F6; border-radius: 8px"></div>
-          <div style="width: 110px; color: black; font-size: 14px; font-family: Inter; font-weight: 400; word-wrap: break-word">Koala Natural Body Wash</div>
-        </div>
-        <div style="width: 110px; height: 177px; padding-bottom: 25px; left: 126px; top: 45px; position: absolute; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 8px; display: inline-flex">
-          <div style="width: 110px; height: 110px; background: #F6F6F6; border-radius: 8px"></div>
-          <div style="width: 110px; color: black; font-size: 14px; font-family: Inter; font-weight: 400; word-wrap: break-word">Men’s Capilene® Cool Daily Shirt</div>
-        </div>
-        <div style="width: 110px; height: 177px; padding-bottom: 25px; left: 252px; top: 45px; position: absolute; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 8px; display: inline-flex">
-          <div style="width: 110px; height: 110px; background: #F6F6F6; border-radius: 8px"></div>
-          <div style="width: 110px; color: black; font-size: 14px; font-family: Inter; font-weight: 400; word-wrap: break-word">Thousand Fell Men’s Court</div>
-        </div>
-        <div style="left: 0px; top: 0px; position: absolute; color: black; font-size: 24px; font-family: Inter; font-weight: 500; word-wrap: break-word">Donations Near You</div>
-      </div>
-      <div style="width: 362px; height: 222px; left: 16px; top: 744px; position: absolute">
-        <div style="width: 110px; height: 177px; left: 0px; top: 45px; position: absolute; flex-direction: column; justify-content: center; align-items: flex-start; gap: 8px; display: inline-flex">
-          <div style="width: 110px; height: 110px; background: #F6F6F6; border-radius: 8px"></div>
-          <div style="width: 110px; color: black; font-size: 14px; font-family: Inter; font-weight: 400; word-wrap: break-word">Item #1 Name<br/>Goes Here</div>
-          <div style="color: black; font-size: 14px; font-family: Inter; font-weight: 600; word-wrap: break-word">$19.99</div>
-        </div>
-        <div style="width: 110px; height: 177px; left: 126px; top: 45px; position: absolute; flex-direction: column; justify-content: center; align-items: flex-start; gap: 8px; display: inline-flex">
-          <div style="width: 110px; height: 110px; background: #F6F6F6; border-radius: 8px"></div>
-          <div style="width: 110px; color: black; font-size: 14px; font-family: Inter; font-weight: 400; word-wrap: break-word">Item #1 Name<br/>Goes Here</div>
-          <div style="color: black; font-size: 14px; font-family: Inter; font-weight: 600; word-wrap: break-word">$19.99</div>
-        </div>
-        <div style="width: 110px; height: 177px; left: 252px; top: 45px; position: absolute; flex-direction: column; justify-content: center; align-items: flex-start; gap: 8px; display: inline-flex">
-          <div style="width: 110px; height: 110px; background: #F6F6F6; border-radius: 8px"></div>
-          <div style="width: 110px; color: black; font-size: 14px; font-family: Inter; font-weight: 400; word-wrap: break-word">Item #1 Name<br/>Goes Here</div>
-          <div style="color: black; font-size: 14px; font-family: Inter; font-weight: 600; word-wrap: break-word">$19.99</div>
-        </div>
-        <div style="left: 0px; top: 0px; position: absolute; color: black; font-size: 24px; font-family: Inter; font-weight: 500; word-wrap: break-word">Hot Deals</div>
-      </div>
-      <div style="width: 365px; height: 38px; left: 15px; top: 414px; position: absolute">
-        <div style="width: 111px; height: 38px; left: 0px; top: 0px; position: absolute; color: black; font-size: 14px; font-family: Inter; font-weight: 600; word-wrap: break-word">Biodegradable and eco-frien...</div>
-        <div style="width: 111px; height: 38px; left: 126px; top: 0px; position: absolute; color: black; font-size: 14px; font-family: Inter; font-weight: 600; word-wrap: break-word">Made with 50-100% recy...</div>
-        <div style="width: 111px; height: 38px; left: 254px; top: 0px; position: absolute; color: black; font-size: 14px; font-family: Inter; font-weight: 600; word-wrap: break-word">Biodegradable and recy...</div>
-      </div>
-      <div style="width: 363px; height: 38px; left: 16px; top: 680px; position: absolute">
-        <div style="width: 111px; height: 38px; left: 0px; top: 0px; position: absolute; color: black; font-size: 14px; font-family: Inter; font-weight: 600; word-wrap: break-word">Lightweight georgette fabr...</div>
-        <div style="width: 111px; height: 38px; left: 126px; top: 0px; position: absolute; color: black; font-size: 14px; font-family: Inter; font-weight: 600; word-wrap: break-word">Modular sofa collection that...</div>
-        <div style="width: 111px; height: 38px; left: 252px; top: 0px; position: absolute; color: black; font-size: 14px; font-family: Inter; font-weight: 600; word-wrap: break-word">The ECOBAGS Canvas Tote...</div>
-      </div>
-      <div style="width: 110px; height: 177px; left: 393px; top: 509px; position: absolute; flex-direction: column; justify-content: center; align-items: flex-start; gap: 8px; display: inline-flex">
-        <div style="width: 110px; height: 110px; background: #F6F6F6; border-radius: 8px"></div>
-        <div style="width: 110px; color: black; font-size: 14px; font-family: Inter; font-weight: 400; word-wrap: break-word">Item #1 Name<br/>Goes Here</div>
-        <div style="color: black; font-size: 14px; font-family: Inter; font-weight: 600; word-wrap: break-word">$19.99</div>
-      </div>
-      <div style="width: 362px; height: 222px; left: 16px; top: 477px; position: absolute">
-        <div style="width: 110px; height: 177px; padding-bottom: 25px; left: 0px; top: 45px; position: absolute; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 8px; display: inline-flex">
-          <div style="width: 110px; height: 110px; background: #F6F6F6; border-radius: 8px"></div>
-          <div style="width: 110px; color: black; font-size: 14px; font-family: Inter; font-weight: 400; word-wrap: break-word">Reformation™ Twilight dress</div>
-        </div>
-        <div style="width: 110px; height: 177px; padding-bottom: 25px; left: 126px; top: 45px; position: absolute; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 8px; display: inline-flex">
-          <div style="width: 110px; height: 110px; background: #F6F6F6; border-radius: 8px"></div>
-          <div style="width: 110px; color: black; font-size: 14px; font-family: Inter; font-weight: 400; word-wrap: break-word">Manks™ Blue Velvet Sofa</div>
-        </div>
-        <div style="width: 110px; height: 177px; padding-bottom: 27px; left: 252px; top: 45px; position: absolute; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 8px; display: inline-flex">
-          <div style="width: 110px; height: 110px; background: #F6F6F6; border-radius: 8px"></div>
-          <div style="width: 110px; color: black; font-size: 13px; font-family: Inter; font-weight: 400; word-wrap: break-word">Recycled Canvas Tote Bag</div>
-        </div>
-        <div style="left: 0px; top: 0px; position: absolute; color: black; font-size: 24px; font-family: Inter; font-weight: 500; word-wrap: break-word">Recommended For You</div>
-      </div>
-      <div style="width: 362px; height: 230px; left: 13px; top: 996px; position: absolute">
-        <div style="width: 110px; height: 183.38px; padding-bottom: 6.38px; left: 0px; top: 46.62px; position: absolute; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 8px; display: inline-flex">
-          <div style="width: 110px; height: 110px; background: #F6F6F6; border-radius: 8px"></div>
-          <div style="width: 110px; color: black; font-size: 14px; font-family: Inter; font-weight: 400; word-wrap: break-word">Item #1 Name<br/>Goes Here</div>
-          <div style="color: black; font-size: 14px; font-family: Inter; font-weight: 600; word-wrap: break-word">$19.99</div>
-        </div>
-        <div style="width: 110px; height: 183.38px; padding-bottom: 6.38px; left: 126px; top: 46.62px; position: absolute; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 8px; display: inline-flex">
-          <div style="width: 110px; height: 110px; background: #F6F6F6; border-radius: 8px"></div>
-          <div style="width: 110px; color: black; font-size: 14px; font-family: Inter; font-weight: 400; word-wrap: break-word">Item #1 Name<br/>Goes Here</div>
-          <div style="color: black; font-size: 14px; font-family: Inter; font-weight: 600; word-wrap: break-word">$19.99</div>
-        </div>
-        <div style="width: 110px; height: 183.38px; padding-bottom: 6.38px; left: 252px; top: 46.62px; position: absolute; flex-direction: column; justify-content: flex-start; align-items: flex-start; gap: 8px; display: inline-flex">
-          <div style="width: 110px; height: 110px; background: #F6F6F6; border-radius: 8px"></div>
-          <div style="width: 110px; color: black; font-size: 14px; font-family: Inter; font-weight: 400; word-wrap: break-word">Item #1 Name<br/>Goes Here</div>
-          <div style="color: black; font-size: 14px; font-family: Inter; font-weight: 600; word-wrap: break-word">$19.99</div>
-        </div>
-        <div style="width: 131px; height: 25px; left: 0px; top: 0px; position: absolute; color: black; font-size: 24px; font-family: Inter; font-weight: 500; word-wrap: break-word">Daily Deals</div>
-      </div>
-      <img style="width: 94px; height: 94px; left: 24px; top: 263px; position: absolute; box-shadow: 3px 4px 3px rgba(0, 0, 0, 0.40)" src="https://via.placeholder.com/94x94" />
-      <img style="width: 115px; height: 115px; left: 139px; top: 253px; position: absolute; box-shadow: 3px 4px 3px rgba(0, 0, 0, 0.40)" src="https://via.placeholder.com/115x115" />
-      <img style="width: 115px; height: 115px; left: 139px; top: 253px; position: absolute; box-shadow: 3px 4px 3px rgba(0, 0, 0, 0.40)" src="https://via.placeholder.com/115x115" />
-      <img style="width: 101px; height: 110px; left: 274px; top: 255px; position: absolute; box-shadow: 3px 4px 3px rgba(0, 0, 0, 0.40); border-radius: 28px" src="https://via.placeholder.com/101x110" />
-      <img style="width: 75px; height: 112px; left: 33px; top: 521px; position: absolute; box-shadow: 3px 4px 3px rgba(0, 0, 0, 0.40)" src="https://via.placeholder.com/75x112" />
-      <img style="width: 111px; height: 40px; left: 139px; top: 557px; position: absolute; box-shadow: 3px 4px 3px rgba(0, 0, 0, 0.40)" src="https://via.placeholder.com/111x40" />
-      <img style="width: 106px; height: 145px; left: 272px; top: 505px; position: absolute; box-shadow: 3px 4px 3px rgba(0, 0, 0, 0.40)" src="https://via.placeholder.com/106x145" />
-      <div style="left: 310px; top: 68px; position: absolute; text-align: right; color: #62931B; font-size: 16px; font-family: Inter; font-weight: 500; word-wrap: break-word">Profile</div>
-      <div style="width: 375px; height: 83.50px; left: 0px; top: 729px; position: absolute">
-        <div style="width: 375px; height: 83px; left: 0px; top: 0.50px; position: absolute">
-          <div style="width: 375px; height: 83px; left: 0px; top: 0px; position: absolute; background: #FAFAFA"></div>
-          <div style="width: 134px; height: 5px; left: 120px; top: 69px; position: absolute; background: black; border-radius: 100px"></div>
-        </div>
-        <div style="height: 32px; left: 26px; top: 15px; position: absolute">
-          <div style="width: 32px; height: 32px; left: 0px; top: 0px; position: absolute; background: #E8E8E8; border-radius: 100px"></div>
-          <div style="width: 32px; height: 32px; left: 72px; top: 0px; position: absolute; background: #E8E8E8; border-radius: 100px"></div>
-          <div style="width: 32px; height: 32px; left: 216px; top: 0px; position: absolute; background: #E8E8E8; border-radius: 100px"></div>
-          <div style="width: 32px; height: 32px; left: 288px; top: 0px; position: absolute; background: #E8E8E8; border-radius: 100px"></div>
-          <img style="width: 32px; height: 32px; left: 144px; top: 0px; position: absolute" src="https://via.placeholder.com/32x32" />
-        </div>
-        <div style="width: 375px; height: 0.50px; left: 0px; top: 0.50px; position: absolute; background: #BDC5CD"></div>
-      </div>
-    </div>
+    .manual-link:active {
+        transform: translateY(0);
+    }
 
-    <div style="position: fixed; bottom: 0; width: 50%; height: 83px; background: #FAFAFA; box-shadow: 0 -2px 5px rgba(0,0,0,0.1);">
-      <div style="position: relative; height: 83px; display: flex; justify-content: space-around; align-items: center;">
-        <div style="background: #E8E8E8; border-radius: 100px; width: 32px; height: 32px;"></div>
-        <div style="background: #E8E8E8; border-radius: 100px; width: 32px; height: 32px;"></div>
-        <img style="width: 32px; height: 32px;" src="https://via.placeholder.com/32x32">
-        <div style="background: #E8E8E8; border-radius: 100px; width: 32px; height: 32px;"></div>
-        <div style="background: #E8E8E8; border-radius: 100px; width: 32px; height: 32px;"></div>
-      </div>
-    </div>
+    .countdown {
+        font-size: 48px;
+        font-weight: bold;
+        margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>MyApp</h1>
+  <div class="loading">Loading your app...</div>
 
-  </body>
+  <div class="countdown" id="countdown">3</div>
+
+  <div>Redirecting to login page</div>
+
+  <a href="login.html" class="manual-link" id="manual-link">
+    Click here if not redirected
+  </a>
+
+  <div style="margin-top: 30px; font-size: 14px; opacity: 0.6;">
+    <div>Origin: <span id="origin-display"></span></div>
+    <div>Cordova: <span id="cordova-display"></span></div>
+  </div>
+</div>
+
+<script>
+  // Debug info
+  console.log('=== APP START ===');
+  console.log('URL:', window.location.href);
+  console.log('Origin:', window.location.origin);
+  console.log('Cordova available:', !!window.cordova);
+
+  // Display debug info
+  document.getElementById('origin-display').textContent = window.location.origin;
+  document.getElementById('cordova-display').textContent = !!window.cordova ? 'Yes' : 'No';
+
+  // Countdown timer
+  let count = 3;
+  const countdownElement = document.getElementById('countdown');
+  const countdownInterval = setInterval(() => {
+      count--;
+      if (count > 0) {
+          countdownElement.textContent = count;
+      } else {
+          clearInterval(countdownInterval);
+          redirectToLogin();
+      }
+  }, 1000);
+
+  // Manual link click
+  document.getElementById('manual-link').addEventListener('click', function(e) {
+      e.preventDefault();
+      redirectToLogin();
+  });
+
+  // Redirect function
+  function redirectToLogin() {
+      console.log('Redirecting to login.html...');
+      window.location.href = 'login.html';
+  }
+
+  // Auto-redirect after 3 seconds (fallback)
+  setTimeout(redirectToLogin, 3000);
+
+  // Cordova deviceready event
+  if (window.cordova) {
+      document.addEventListener('deviceready', function() {
+          console.log('Cordova device ready');
+          document.getElementById('cordova-display').textContent = 'Ready';
+      }, false);
+  }
+</script>
+</body>
 </html>
